@@ -1,4 +1,11 @@
 <?php
+/*
+ * @author: 布尔
+ * @name: 类名
+ * @desc: 介绍
+ * @LastEditTime: 2023-07-06 11:02:55
+ * @FilePath: \dtalk\src\Attendance.php
+ */
 
 /*
  * @author: 布尔
