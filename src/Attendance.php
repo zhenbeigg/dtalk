@@ -3,7 +3,7 @@
  * @author: 布尔
  * @name: 钉钉考勤接口类
  * @desc: 介绍
- * @LastEditTime: 2023-07-06 11:11:36
+ * @LastEditTime: 2023-07-06 21:38:27
  * @FilePath: \dtalk\src\Attendance.php
  */
 namespace Eykj\Dtalk;
@@ -24,7 +24,6 @@ class Attendance
         $this->GuzzleHttp = $GuzzleHttp;
         $this->Service = $Service;
     }
-
     /**
      * 分页条数
      */

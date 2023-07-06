@@ -5,7 +5,7 @@
  * @desc: 介绍
  * @LastEditTime: 2023-07-06 11:49:45
  */
-namespace App\Lib\Plugins\Dtalk;
+namespace Eykj\Dtalk;
 
 use Eykj\Base\GuzzleHttp;
 use Eykj\Base\JsonRpcInterface\AuthInterface;
