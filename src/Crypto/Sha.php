@@ -9,13 +9,16 @@
 namespace Eykj\Dtalk\Crypto;
 
 use Eykj\Dtalk\Crypto\ErrorCode;
-use Hyperf\Di\Annotation\Inject;
 
 class Sha
 {
-    
-    #[Inject]
-    protected ErrorCode $ErrorCode;
+    protected ?ErrorCode $ErrorCode;
+
+    // 通过设置参数为 nullable，表明该参数为一个可选参数
+    public function __construct(?ErrorCode $ErrorCode)
+    {
+        $this->ErrorCode = $ErrorCode;
+    }
     
     public function getSHA1($token, $timestamp, $nonce, $encrypt_msg)
     {

@@ -1,27 +1,28 @@
 <?php
-
 /*
  * @author: 布尔
  * @name: 钉钉Service类
  * @desc: 介绍
  * @LastEditTime: 2023-07-06 11:49:45
  */
-
 namespace App\Lib\Plugins\Dtalk;
 
-use Hyperf\Di\Annotation\Inject;
 use Eykj\Base\GuzzleHttp;
 use Eykj\Base\JsonRpcInterface\AuthInterface;
 use function Hyperf\Support\env;
 
 class Service
 {
+    protected ?GuzzleHttp $GuzzleHttp;
 
-    #[Inject]
-    protected GuzzleHttp $GuzzleHttp;
+    protected ?AuthInterface $AuthInterface;
 
-    #[Inject]
-    protected AuthInterface $AuthInterface;
+    // 通过设置参数为 nullable，表明该参数为一个可选参数
+    public function __construct(?GuzzleHttp $GuzzleHttp,?AuthInterface $AuthInterface)
+    {
+        $this->GuzzleHttp = $GuzzleHttp;
+        $this->AuthInterface = $AuthInterface;
+    }
     /**
      * @author: 布尔
      * @name: 获取access_token

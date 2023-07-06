@@ -8,7 +8,6 @@
  */
 namespace Eykj\Dtalk;
 
-use Hyperf\Di\Annotation\Inject;
 use Eykj\Base\GuzzleHttp;
 use Eykj\Dtalk\Service;
 use Eykj\Base\JsonRpcInterface\AuthInterface;
@@ -16,15 +15,19 @@ use function Hyperf\Support\env;
 
 class Message
 {
+    protected ?GuzzleHttp $GuzzleHttp;
     
-    #[Inject]
-    protected GuzzleHttp $GuzzleHttp;
+    protected ?Service $Service;
+
+    protected ?AuthInterface $AuthInterface;
     
-    #[Inject]
-    protected Service $Service;
-    
-    #[Inject]
-    protected AuthInterface $AuthInterface;
+    // 通过设置参数为 nullable，表明该参数为一个可选参数
+    public function __construct(?GuzzleHttp $GuzzleHttp,?Service $Service,?AuthInterface $AuthInterface)
+    {
+        $this->GuzzleHttp = $GuzzleHttp;
+        $this->Service = $Service;
+        $this->AuthInterface = $AuthInterface;
+    }
     /**
      * @author: 布尔
      * @name: 发送工作通知消息

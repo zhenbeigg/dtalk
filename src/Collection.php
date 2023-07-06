@@ -1,27 +1,28 @@
 <?php
-
 /*
  * @author: 布尔
  * @name: 智能填表
  * @desc: 介绍
  * @LastEditTime: 2022-01-19 14:03:57
  */
-
 namespace Eykj\Dtalk;
 
-use Hyperf\Di\Annotation\Inject;
 use Eykj\Base\GuzzleHttp;
 use Eykj\Dtalk\Service;
 use function Hyperf\Support\env;
 
 class Collection
 {
+    protected ?GuzzleHttp $GuzzleHttp;
 
-    #[Inject]
-    protected GuzzleHttp $GuzzleHttp;
+    protected ?Service $Service;
 
-    #[Inject]
-    protected Service $Service;
+    // 通过设置参数为 nullable，表明该参数为一个可选参数
+    public function __construct(?GuzzleHttp $GuzzleHttp,?Service $Service)
+    {
+        $this->GuzzleHttp = $GuzzleHttp;
+        $this->Service = $Service;
+    }
     /**
      * 页数
      */

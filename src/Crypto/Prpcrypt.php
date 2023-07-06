@@ -9,15 +9,18 @@ namespace Eykj\Dtalk\Crypto;
 
 use Eykj\Dtalk\Crypto\ErrorCode;
 use Eykj\Dtalk\Crypto\PKCS7Encoder;
-use Hyperf\Di\Annotation\Inject;
 
 class Prpcrypt
 {
-    
     public $key;
-    
-    #[Inject]
-    protected ErrorCode $ErrorCode;
+
+    protected ?ErrorCode $ErrorCode;
+
+    // 通过设置参数为 nullable，表明该参数为一个可选参数
+    public function __construct(?ErrorCode $ErrorCode)
+    {
+        $this->ErrorCode = $ErrorCode;
+    }
     
     public function set_key($k)
     {

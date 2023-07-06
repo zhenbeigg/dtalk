@@ -10,7 +10,6 @@ namespace Eykj\Dtalk\Crypto;
 use Eykj\Dtalk\Crypto\Sha;
 use Eykj\Dtalk\Crypto\Prpcrypt;
 use Eykj\Dtalk\Crypto\ErrorCode;
-use Hyperf\Di\Annotation\Inject;
 
 class DingtalkCrypt
 {
@@ -20,15 +19,20 @@ class DingtalkCrypt
     public $m_encodingAesKey;
     
     public $m_suiteKey;
-    
-    #[Inject]
-    protected Prpcrypt $Prpcrypt;
-    
-    #[Inject]
-    protected ErrorCode $ErrorCode;
-    
-    #[Inject]
-    protected Sha $Sha;
+
+    protected ?Prpcrypt $Prpcrypt;
+
+    protected ?ErrorCode $ErrorCode;
+
+    protected ?Sha $Sha;
+
+    // 通过设置参数为 nullable，表明该参数为一个可选参数
+    public function __construct(?Prpcrypt $Prpcrypt,?ErrorCode $ErrorCode,?Sha $Sha)
+    {
+        $this->Prpcrypt = $Prpcrypt;
+        $this->ErrorCode = $ErrorCode;
+        $this->Sha = $Sha;
+    }
     
     public function set_key($token, $encodingAesKey, $suiteKey)
     {

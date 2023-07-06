@@ -1,5 +1,4 @@
 <?php
-
 /*
  * @author: 布尔
  * @name: 钉工牌
@@ -8,19 +7,22 @@
  */
 namespace Eykj\Dtalk;
 
-use Hyperf\Di\Annotation\Inject;
 use Eykj\Base\GuzzleHttp;
 use Eykj\Dtalk\Service;
 use function Hyperf\Support\env;
 
 class Codes
 {
-    
-    #[Inject]
-    protected GuzzleHttp $GuzzleHttp;
-    
-    #[Inject]
-    protected Service $Service;
+    protected ?GuzzleHttp $GuzzleHttp;
+
+    protected ?Service $Service;
+
+    // 通过设置参数为 nullable，表明该参数为一个可选参数
+    public function __construct(?GuzzleHttp $GuzzleHttp,?Service $Service)
+    {
+        $this->GuzzleHttp = $GuzzleHttp;
+        $this->Service = $Service;
+    }
     /**
      * @author: 布尔
      * @name:创建钉工牌电子码
