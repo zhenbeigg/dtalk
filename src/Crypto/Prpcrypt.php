@@ -8,7 +8,7 @@
 namespace Eykj\Dtalk\Crypto;
 
 use Eykj\Dtalk\Crypto\ErrorCode;
-use App\Lib\Plugins\Dtalk\Crypto\PKCS7Encoder;
+use Eykj\Dtalk\Crypto\PKCS7Encoder;
 use Hyperf\Di\Annotation\Inject;
 
 class Prpcrypt

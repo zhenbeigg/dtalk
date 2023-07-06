@@ -6,11 +6,11 @@
  * @desc: 介绍
  * @LastEditTime: 2022-04-13 21:12:30
  */
-namespace App\Lib\Plugins\Dtalk;
+namespace Eykj\Dtalk;
 
 use Hyperf\Di\Annotation\Inject;
 use Eykj\Base\GuzzleHttp;
-use App\Lib\Plugins\Dtalk\Service;
+use Eykj\Dtalk\Service;
 use Eykj\Base\JsonRpcInterface\AuthInterface;
 use function Hyperf\Support\env;
 

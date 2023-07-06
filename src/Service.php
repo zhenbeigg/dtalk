@@ -4,13 +4,12 @@
  * @author: 布尔
  * @name: 钉钉Service类
  * @desc: 介绍
- * @LastEditTime: 2023-07-05 20:32:50
+ * @LastEditTime: 2023-07-06 11:49:45
  */
 
 namespace App\Lib\Plugins\Dtalk;
 
 use Hyperf\Di\Annotation\Inject;
-use Hyperf\Guzzle\ClientFactory;
 use Eykj\Base\GuzzleHttp;
 use Eykj\Base\JsonRpcInterface\AuthInterface;
 use function Hyperf\Support\env;
@@ -20,9 +19,6 @@ class Service
 
     #[Inject]
     protected GuzzleHttp $GuzzleHttp;
-
-    #[Inject]
-    protected ClientFactory $ClientFactory;
 
     #[Inject]
     protected AuthInterface $AuthInterface;

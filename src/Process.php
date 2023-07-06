@@ -6,11 +6,11 @@
  * @desc: 介绍
  * @LastEditTime: 2022-02-10 20:28:05
  */
-namespace App\Lib\Plugins\Dtalk;
+namespace Eykj\Dtalk;
 
 use Hyperf\Di\Annotation\Inject;
 use Eykj\Base\GuzzleHttp;
-use App\Lib\Plugins\Dtalk\Service;
+use Eykj\Dtalk\Service;
 use function Hyperf\Support\env;
 
 class Process

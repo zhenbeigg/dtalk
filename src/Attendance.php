@@ -1,22 +1,16 @@
 <?php
 /*
  * @author: 布尔
- * @name: 类名
- * @desc: 介绍
- * @LastEditTime: 2023-07-06 11:02:55
- * @FilePath: \dtalk\src\Attendance.php
- */
-
-/*
- * @author: 布尔
  * @name: 钉钉考勤接口类
  * @desc: 介绍
+ * @LastEditTime: 2023-07-06 11:11:36
+ * @FilePath: \dtalk\src\Attendance.php
  */
-namespace App\Lib\Plugins\Dtalk;
+namespace Eykj\Dtalk;
 
 use Hyperf\Di\Annotation\Inject;
 use Eykj\Base\GuzzleHttp;
-use App\Lib\Plugins\Dtalk\Service;
+use Eykj\Dtalk\Service;
 use function Hyperf\Support\env;
 
 class Attendance

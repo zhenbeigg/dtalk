@@ -7,11 +7,11 @@
  * @LastEditTime: 2022-01-19 14:03:57
  */
 
-namespace App\Lib\Plugins\Dtalk;
+namespace Eykj\Dtalk;
 
 use Hyperf\Di\Annotation\Inject;
 use Eykj\Base\GuzzleHttp;
-use App\Lib\Plugins\Dtalk\Service;
+use Eykj\Dtalk\Service;
 use function Hyperf\Support\env;
 
 class Collection
