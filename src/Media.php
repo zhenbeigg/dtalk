@@ -2,9 +2,9 @@
 
 /*
  * @author: 布尔
- * @name: 文件
+ * @name: 媒体
  * @desc: 介绍
- * @LastEditTime: 2023-01-08 23:20:13
+ * @LastEditTime: 2023-07-06 22:29:47
  */
 namespace Eykj\Dtalk;
 
@@ -38,7 +38,7 @@ class Media
         $dtalk_url = env('DTALK_URL', '');
         $url = $dtalk_url . '/media/upload?access_token=' . $access_token;
         $type['name'] = 'type';
-        $type['contents'] = 'file';
+        $type['contents'] = $param['type']??'file';
         $media['name'] = 'media';
         $media['contents'] = fopen($param['file'], 'r+');
         $data[] = $type;
@@ -49,8 +49,6 @@ class Media
             fclose($media['contents']);
         }
         if ($r['errcode'] != 0) {
-            logger()->error('长传媒体文件', $r);
-            alog($r, 2);
             error(500, $r['errmsg']);
         }
         return $r['media_id'];
