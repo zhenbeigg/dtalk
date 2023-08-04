@@ -37,15 +37,13 @@ class Calendar
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
         $dtalk_url = env('DTALK_NEW_URL', '');
-        $url = $dtalk_url . '/v1.0/calendar/users' . $param['unionid'] . '/calendars/primary/events';
+        $url = $dtalk_url . '/v1.0/calendar/users/' . $param['unionid'] . '/calendars/primary/events?showDeleted=false&timeMin=' . urlencode(date('c', strtotime($param['start_time']))) . '&timeMax=' . urlencode(date('c', strtotime($param['end_time'])));
         $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
         $r = $this->GuzzleHttp->get($url, $options);
-        if (isset($r['code'])) {
-            bug()->error('创建审批模板-' . json_encode($r, 320));
-            logger()->error('创建审批模板', $r);
-            error(500, $r['message']);
+        if (isset($r['events'])) {
+            return $r['events'];
         }
-        return $r["result"];
+        return [];
     }
     /**
      * @author: 布尔
