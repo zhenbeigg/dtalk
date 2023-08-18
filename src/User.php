@@ -71,8 +71,6 @@ class User
                 } while ($rs["result"]["has_more"]);
             }
         } else {
-            bug()->error('部门用户列表-' . json_encode($r, 320));
-            logger()->error('部门用户列表', $r);
             return [];
         }
         return $r["result"]["list"];
@@ -91,11 +89,8 @@ class User
         $dtalk_url = env('DTALK_URL', '');
         $url = $dtalk_url . '/topapi/user/listid?access_token=' . $access_token;
         $data = array('dept_id' => $param['dept_id'], 'cursor' => $this->cursor, 'size' => $this->size);
-        logger()->error('data', $data);
         $r = $this->GuzzleHttp->post($url, $data);
         if ($r["errcode"] != 0) {
-            bug()->error('获取部门用户userid列表-' . json_encode($r, 320));
-            logger()->error('获取部门用户userid列表', $r);
             error(500, $r['errmsg']);
         }
         return $r["result"]["userid_list"];
@@ -115,8 +110,6 @@ class User
         $url = $dtalk_url . '/topapi/v2/user/get?access_token=' . $access_token . '&userid=' . $param['userid'];
         $r = $this->GuzzleHttp->get($url);
         if ($r['errcode'] != 0) {
-            bug()->error('用户详情-' . json_encode($r, 320));
-            logger()->error('用户详情', $r);
             return [];
         }
         return $r["result"];
@@ -137,8 +130,6 @@ class User
         $data['code'] = $param['code'];
         $r = $this->GuzzleHttp->post($url, $data);
         if ($r['errcode'] != 0) {
-            bug()->error('通过CODE换取用户身份-' . json_encode($r, 320));
-            logger()->error('通过CODE换取用户身份', $r);
             error(500, $r['errmsg']);
         }
         return $r["result"];
@@ -159,8 +150,6 @@ class User
         $data = eyc_array_key($param, 'only_active');
         $r = $this->GuzzleHttp->post($url, $data);
         if ($r['errcode'] != 0) {
-            bug()->error('获取员工人数-' . json_encode($r, 320));
-            logger()->error('获取员工人数', $r);
             error(500, $r['errmsg']);
         }
         return (int) $r["result"]['count'];
@@ -180,8 +169,6 @@ class User
         $url = $dtalk_url . '/topapi/user/listadmin?access_token=' . $access_token;
         $r = $this->GuzzleHttp->get($url);
         if ($r['errcode'] != 0) {
-            bug()->error('管理员列表-' . json_encode($r, 320));
-            logger()->error('管理员列表', $r);
             error(500, $r['errmsg']);
         }
         return $r["result"];
@@ -203,8 +190,6 @@ class User
         $data = eyc_array_key($param, 'mobile');
         $r = $this->GuzzleHttp->post($url, $data);
         if ($r['errcode'] != 0) {
-            bug()->error('根据手机号查询用户-' . json_encode($r, 320));
-            logger()->error('根据手机号查询用户', $r);
             error(500, $r['errmsg']);
         }
         return $r["result"];

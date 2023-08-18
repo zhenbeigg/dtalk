@@ -57,7 +57,6 @@ class Process
                 } while ($rs["result"]["next_cursor"]);
             }
         } else {
-            logger()->error('获取指定用户可见的审批表单列表', $r);
             error(500, $r['errmsg']);
         }
         return $r["result"]["process_list"];

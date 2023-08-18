@@ -41,8 +41,6 @@ class Calendar
         $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
         $r = $this->GuzzleHttp->get($url, $options);
         if (isset($r['code'])) {
-            bug()->error('创建审批模板-' . json_encode($r, 320));
-            logger()->error('创建审批模板', $r);
             error(500, $r['message']);
         }
         return $r["result"];
@@ -66,8 +64,6 @@ class Calendar
         $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
         $r = $this->GuzzleHttp->post($url, $data, $options);
         if (isset($r['code'])) {
-            bug()->error('日程签到-' . json_encode($r, 320));
-            logger()->error('日程签到', $r);
             error(500, $r['message']);
         }
         return $r;

@@ -42,8 +42,6 @@ class Codes
         $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
         $r = $this->GuzzleHttp->post($url, $data, $options);
         if (isset($r['code'])) {
-            bug()->error('创建钉工牌电子码-' . json_encode($r, 320));
-            logger()->error('创建钉工牌电子码', $r);
             error(500, $r['message']);
         }
         return $r;
@@ -67,8 +65,6 @@ class Codes
         $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
         $r = $this->GuzzleHttp->post($url, $data, $options);
         if (isset($r['code'])) {
-            bug()->error('钉工牌解码-' . json_encode($r, 320));
-            logger()->error('钉工牌解码', $r);
             error(500, $r['message']);
         }
         return $r;
@@ -92,8 +88,6 @@ class Codes
         $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
         $r = $this->GuzzleHttp->post($url, $data, $options);
         if (isset($r['code'])) {
-            bug()->error('通知支付结果-' . json_encode($r, 320));
-            logger()->error('通知支付结果', $r);
             error(500, $r['message']);
         }
         return $r;
@@ -117,8 +111,6 @@ class Codes
         $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
         $r = $this->GuzzleHttp->post($url, $data, $options);
         if (isset($r['code'])) {
-            bug()->error('配置企业钉工牌-' . json_encode($r, 320));
-            logger()->error('配置企业钉工牌', $r);
             error(500, $r['message']);
         }
         return $r;
@@ -142,8 +134,6 @@ class Codes
         $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
         $r = $this->GuzzleHttp->post($url, $data, $options);
         if (isset($r['code'])) {
-            bug()->error('钉工牌通知消息-' . json_encode($r, 320));
-            logger()->error('钉工牌通知消息', $r);
             error(500, $r['message']);
         }
         return $r;

@@ -42,8 +42,6 @@ class Workflow
         $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
         $r = $this->GuzzleHttp->post($url, $data, $options);
         if (isset($r['code'])) {
-            bug()->error('创建审批模板-' . json_encode($r, 320));
-            logger()->error('创建审批模板', $r);
             error(500, $r['message']);
         }
         return $r["result"];
@@ -67,8 +65,6 @@ class Workflow
         $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
         $r = $this->GuzzleHttp->post($url, $data, $options);
         if (isset($r['code'])) {
-            bug()->error('创建审批模板-' . json_encode($r, 320));
-            logger()->error('创建审批模板', $r);
             error(500, $r['message']);
         }
         return $r;

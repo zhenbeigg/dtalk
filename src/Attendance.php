@@ -49,7 +49,6 @@ class Attendance
         $data['userIds'] = isset($param['userIds']) ? $param['userIds'] : [$param['userid']];
         $r = $this->GuzzleHttp->post($url, $data);
         if ($r["errcode"] != 0) {
-            logger()->error('获取打卡详情', $r);
             error(500, $r['errmsg']);
         }
         return $r["recordresult"];
@@ -70,7 +69,6 @@ class Attendance
         $data['op_user_id'] = isset($param['op_user_id']) ? $param['op_user_id'] : $param['userid'];
         $r = $this->GuzzleHttp->post($url, $data);
         if ($r["errcode"] != 0) {
-            logger()->error('考勤班次摘要', $r);
             error(500, $r['errmsg']);
         }
         return $r["result"]['result'];

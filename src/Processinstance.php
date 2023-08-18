@@ -57,7 +57,6 @@ class Processinstance
                 } while ($rs["result"]["next_cursor"]);
             }
         } else {
-            logger()->error('获取审批实例ID列表', $r);
             error(500, $r['errmsg']);
         }
         return $r["result"]["list"];

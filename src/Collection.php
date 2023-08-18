@@ -60,7 +60,6 @@ class Collection
             redis()->del($param['corpid'] . '_' . $param['corp_product'] . '_access_token');
             $this->form_list($param);
         } else {
-            logger()->error('获取用户创建的填表模板', $r);
             error(500, $r['errmsg']);
         }
         return $r["result"]["list"];
@@ -93,7 +92,6 @@ class Collection
                 return [];
             }
         } else {
-            logger()->error('获取填表实例数据', $r);
             return $r;
         }
         return $r["result"]["list"];

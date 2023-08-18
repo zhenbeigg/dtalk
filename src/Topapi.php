@@ -39,8 +39,6 @@ class Topapi
         $data = eyc_array_key($param, 'saveProcessRequest');
         $r = $this->GuzzleHttp->post($url, $data);
         if ($r['errcode'] != 0) {
-            bug()->error('创建审批模板-' . json_encode($r, 320));
-            logger()->error('创建审批模板', $r);
             error(500, $r['errmsg']);
         }
         return $r["result"];
@@ -61,8 +59,6 @@ class Topapi
         $data = eyc_array_key($param, 'agent_id,process_code,originator_user_id,dept_id,approvers,approvers_v2,cc_list,cc_position,form_component_values');
         $r = $this->GuzzleHttp->post($url, $data);
         if ($r['errcode'] != 0) {
-            bug()->error('创建审批模板-' . json_encode($r, 320));
-            logger()->error('创建审批模板', $r);
             error(500, $r['errmsg']);
         }
         return $r;
