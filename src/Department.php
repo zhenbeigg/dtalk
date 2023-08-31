@@ -38,10 +38,19 @@ class Department
         $dtalk_url = env('DTALK_URL', '');
         $url = $dtalk_url . '/topapi/v2/department/listsub?access_token=' . $access_token . '&dept_id=' . $param['dept_id'];
         $r = $this->GuzzleHttp->get($url);
-        if ($r['errcode'] != 0) {
-            return [];
+        if (!$r) {
+            return $r;
         }
-        return $r["result"];
+        /* 请求限流延迟一秒在发起请求 */
+        if ($r['errcode'] == 88) {
+            sleep(1);
+            $r = $this->GuzzleHttp->get($url);
+        }
+        if ($r['errcode'] == 0) {
+            return $r["result"];
+        }
+        alog($r, 2);
+        return [];
     }
     /**
      * @author: 布尔
@@ -58,10 +67,19 @@ class Department
         $url = $dtalk_url . '/topapi/v2/department/listparentbydept?access_token=' . $access_token;
         $data['dept_id'] = $param['dept_id'];
         $r = $this->GuzzleHttp->post($url, $data);
-        if ($r['errcode'] != 0) {
-            return [];
+        if (!$r) {
+            return $r;
         }
-        return $r["result"]['parent_id_list'];
+        /* 请求限流延迟一秒在发起请求 */
+        if ($r['errcode'] == 88) {
+            sleep(1);
+            $r = $this->GuzzleHttp->post($url, $data);
+        }
+        if ($r['errcode'] == 0) {
+            return $r["result"]['parent_id_list'];
+        }
+        alog($r, 2);
+        return [];
     }
     /**
      * @author: 布尔
@@ -118,17 +136,26 @@ class Department
         $url = $dtalk_url . '/topapi/v2/department/get?access_token=' . $access_token;
         $data = eyc_array_key($param, 'dept_id,language');
         $r = $this->GuzzleHttp->post($url, $data);
+        if (!$r) {
+            return $r;
+        }
         /* 请求的员工userid不在授权范围内,切换为内部应用信息 */
         if ($r['errcode'] == 50004) {
             $param['types'] = 'diy';
+            $param['corp_product'] = 'service';
             /* 查询钉钉access_token */
-            $access_token = $this->Service->get_access_token($param);
+            try {
+                $access_token = $this->Service->get_access_token($param);
+            } catch (\Throwable $th) {
+                return [];
+            }
             $dtalk_url = env('DTALK_URL', '');
             $url = $dtalk_url . '/topapi/v2/department/get?access_token=' . $access_token;
             $data = eyc_array_key($param, 'dept_id,language');
             $r = $this->GuzzleHttp->post($url, $data);
         }
         if ($r['errcode'] != 0) {
+            alog($r, 2);
             return [];
         }
         return $r['result'];

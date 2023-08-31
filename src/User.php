@@ -3,7 +3,7 @@
  * @author: 布尔
  * @name: 钉钉用户接口类
  * @desc: 介绍
- * @LastEditTime: 2022-03-29 17:36:40
+ * @LastEditTime: 2023-08-31 19:52:57
  */
 namespace Eykj\Dtalk;
 
@@ -71,6 +71,7 @@ class User
                 } while ($rs["result"]["has_more"]);
             }
         } else {
+            alog($r, 2);
             return [];
         }
         return $r["result"]["list"];
@@ -109,7 +110,23 @@ class User
         $dtalk_url = env('DTALK_URL', '');
         $url = $dtalk_url . '/topapi/v2/user/get?access_token=' . $access_token . '&userid=' . $param['userid'];
         $r = $this->GuzzleHttp->get($url);
+        /* 请求的员工userid不在授权范围内,切换为内部应用信息 */
+        if ($r['errcode'] == 50002) {
+            $param['types'] = 'diy';
+            $param['corp_product'] = 'service';
+            /* 查询钉钉access_token */
+            try {
+                $access_token = $this->Service->get_access_token($param);
+            } catch (\Throwable $th) {
+                return [];
+            }
+            /* 获取配置url */
+            $dtalk_url = env('DTALK_URL', '');
+            $url = $dtalk_url . '/topapi/v2/user/get?access_token=' . $access_token . '&userid=' . $param['userid'];
+            $r = $this->GuzzleHttp->get($url);
+        }
         if ($r['errcode'] != 0) {
+            alog($r, 2);
             return [];
         }
         return $r["result"];
