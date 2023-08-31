@@ -5,6 +5,7 @@
  * @desc: 介绍
  * @LastEditTime: 2022-03-19 09:44:39
  */
+
 namespace Eykj\Dtalk;
 
 use Eykj\Base\GuzzleHttp;
@@ -18,7 +19,7 @@ class Department
     protected ?Service $Service;
 
     // 通过设置参数为 nullable，表明该参数为一个可选参数
-    public function __construct(?GuzzleHttp $GuzzleHttp,?Service $Service)
+    public function __construct(?GuzzleHttp $GuzzleHttp, ?Service $Service)
     {
         $this->GuzzleHttp = $GuzzleHttp;
         $this->Service = $Service;
@@ -29,7 +30,7 @@ class Department
      * @param array $param
      * @return array
      */
-    public function listsub(array $param) : array
+    public function listsub(array $param): array
     {
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
@@ -48,7 +49,7 @@ class Department
      * @param array $param
      * @return array
      */
-    public function listparentbydept(array $param) : array
+    public function listparentbydept(array $param): array
     {
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
@@ -68,7 +69,7 @@ class Department
      * @param array $param
      * @return int
      */
-    public function create(array $param) : int
+    public function create(array $param): int
     {
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
@@ -88,7 +89,7 @@ class Department
      * @param array $param
      * @return array
      */
-    public function update(array $param) : array
+    public function update(array $param): array
     {
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
@@ -108,7 +109,7 @@ class Department
      * @param array $param
      * @return array
      */
-    public function get(array $param) : array
+    public function get(array $param): array
     {
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);

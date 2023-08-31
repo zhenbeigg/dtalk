@@ -7,6 +7,7 @@
  * @LastEditTime: 2023-08-31 17:51:40
  * @FilePath: \dtalk\src\Edu.php
  */
+
 namespace Eykj\Dtalk;
 
 use Hyperf\Di\Annotation\Inject;
@@ -15,10 +16,10 @@ use Eykj\Dtalk\Service;
 
 class Edu
 {
-    
+
     #[Inject]
     protected GuzzleHttp $GuzzleHttp;
-    
+
     #[Inject]
     protected Service $Service;
     /**
@@ -35,7 +36,7 @@ class Edu
      * @param array $param
      * @return array
      */
-    public function dept_get(array $param) : array
+    public function dept_get(array $param): array
     {
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
@@ -46,7 +47,6 @@ class Edu
         $r = $this->GuzzleHttp->post($url, $data);
         if ($r['errcode'] != 0) {
             alog($r, 2);
-            logger()->error('新教育部门详情', $r);
             return [];
         }
         return $r["result"]['detail'];
@@ -57,7 +57,7 @@ class Edu
      * @param array $param
      * @return array
      */
-    public function dept_list(array $param) : array
+    public function dept_list(array $param): array
     {
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
@@ -77,7 +77,6 @@ class Edu
             }
         } else {
             alog($r, 2);
-            logger()->error('新教育部门列表', $r);
             return [];
         }
         return $r["result"]["details"];
@@ -88,7 +87,7 @@ class Edu
      * @param array $param
      * @return array
      */
-    public function user_list(array $param) : array
+    public function user_list(array $param): array
     {
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
@@ -108,7 +107,6 @@ class Edu
             }
         } else {
             alog($r, 2);
-            logger()->error('新教育人员列表', $r);
             return [];
         }
         return $r["result"]["details"];
@@ -119,7 +117,7 @@ class Edu
      * @param array $param
      * @return array
      */
-    public function user_get(array $param) : array
+    public function user_get(array $param): array
     {
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
@@ -130,7 +128,6 @@ class Edu
         $r = $this->GuzzleHttp->post($url, $data);
         if ($r['errcode'] != 0) {
             alog($r, 2);
-            logger()->error('新教育人员详情', $r);
             return [];
         }
         return $r["result"]['details'];
@@ -141,7 +138,7 @@ class Edu
      * @param array $param
      * @return array
      */
-    public function user_relation_list(array $param) : array
+    public function user_relation_list(array $param): array
     {
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
@@ -161,7 +158,6 @@ class Edu
             }
         } else {
             alog($r, 2);
-            logger()->error('新教育获取班级内学生的关系列表', $r);
             return [];
         }
         return $r["result"]["relations"];
@@ -172,7 +168,7 @@ class Edu
      * @param array $param
      * @return array
      */
-    public function relation_get(array $param) : array
+    public function relation_get(array $param): array
     {
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
@@ -183,7 +179,6 @@ class Edu
         $r = $this->GuzzleHttp->post($url, $data);
         if ($r['errcode'] != 0) {
             alog($r, 2);
-            logger()->error('新教育获取学生监护人详情', $r);
             return [];
         }
         return $r["result"]['relations'];
@@ -194,7 +189,7 @@ class Edu
      * @param array $param
      * @return array
      */
-    public function class_studentinfo_get(array $param) : array
+    public function class_studentinfo_get(array $param): array
     {
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
@@ -205,7 +200,6 @@ class Edu
         $r = $this->GuzzleHttp->post($url, $data);
         if ($r['errcode'] != 0) {
             alog($r, 2);
-            logger()->error('获取学生信息', $r);
             return [];
         }
         return $r["result"];
@@ -216,7 +210,7 @@ class Edu
      * @param array $param
      * @return array
      */
-    public function class_studentid_get(array $param) : array
+    public function class_studentid_get(array $param): array
     {
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
@@ -227,7 +221,6 @@ class Edu
         $r = $this->GuzzleHttp->post($url, $data);
         if ($r['errcode'] != 0) {
             alog($r, 2);
-            logger()->error('获取学生ID列表', $r);
             return [];
         }
         return $r["result"]["student_ids"];
