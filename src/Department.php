@@ -3,7 +3,7 @@
  * @author: 布尔
  * @name: 钉钉部门接口类
  * @desc: 介绍
- * @LastEditTime: 2022-03-19 09:44:39
+ * @LastEditTime: 2023-08-31 18:20:53
  */
 
 namespace Eykj\Dtalk;
@@ -132,5 +132,29 @@ class Department
             return [];
         }
         return $r['result'];
+    }
+    /**
+     * @author: 布尔
+     * @name: 获取子部门ID列表
+     * @param array $param
+     * @return array
+     */
+    public function listsubid(array $param): array
+    {
+        /* 查询钉钉access_token */
+        $access_token = $this->Service->get_access_token($param);
+        /* 获取配置url */
+        $dtalk_url = env('DTALK_URL', '');
+        $url = $dtalk_url . '/topapi/v2/department/listsubid?access_token=' . $access_token;
+        $data = eyc_array_key($param, 'dept_id');
+        $r = $this->GuzzleHttp->post($url, $data);
+        if (!$r) {
+            return $r;
+        }
+        if ($r['errcode'] != 0) {
+            alog($r, 2);
+            return [];
+        }
+        return $r['result']['dept_id_list'];
     }
 }
