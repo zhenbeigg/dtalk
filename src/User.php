@@ -3,7 +3,7 @@
  * @author: 布尔
  * @name: 钉钉用户接口类
  * @desc: 介绍
- * @LastEditTime: 2023-08-31 19:52:57
+ * @LastEditTime: 2023-09-27 13:48:21
  */
 namespace Eykj\Dtalk;
 
@@ -202,7 +202,7 @@ class User
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_URL', '');
+        $dtalk_url = env('DTALK_DIY_URL', '');
         $url = $dtalk_url . '/topapi/v2/user/getbymobile?access_token=' . $access_token;
         $data = eyc_array_key($param, 'mobile');
         $r = $this->GuzzleHttp->post($url, $data);
