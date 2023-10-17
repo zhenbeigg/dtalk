@@ -36,7 +36,11 @@ class Workflow
         //新版token获取标识
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_NEW_URL', '');
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_NEW_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_NEW_URL', '');
+        }
         $url = $dtalk_url . '/v1.0/workflow/forms';
         $data = eyc_array_key($param, 'processCode,name,formComponents,templateConfig');
         $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
@@ -59,7 +63,11 @@ class Workflow
         //新版token获取标识
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_NEW_URL', '');
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_NEW_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_NEW_URL', '');
+        }
         $url = $dtalk_url . '/v1.0/workflow/processInstances';
         $data = eyc_array_key($param, 'originatorUserId,processCode,microappAgentId,deptId,approvers,ccList,ccPosition,targetSelectActioners,formComponentValues,RequestId');
         $options['headers']['x-acs-dingtalk-access-token'] = $access_token;

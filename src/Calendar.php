@@ -5,6 +5,7 @@
  * @desc: 介绍
  * @LastEditTime: 2022-03-15 17:30:22
  */
+
 namespace Eykj\Dtalk;
 
 use Eykj\Base\GuzzleHttp;
@@ -18,7 +19,7 @@ class Calendar
     protected ?Service $Service;
 
     // 通过设置参数为 nullable，表明该参数为一个可选参数
-    public function __construct(?GuzzleHttp $GuzzleHttp,?Service $Service)
+    public function __construct(?GuzzleHttp $GuzzleHttp, ?Service $Service)
     {
         $this->GuzzleHttp = $GuzzleHttp;
         $this->Service = $Service;
@@ -29,14 +30,18 @@ class Calendar
      * @param array $param
      * @return array
      */
-    public function events(array $param) : array
+    public function events(array $param): array
     {
         /* 查询钉钉access_token */
         $param['new_token'] = 1;
         //新版token获取标识
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_NEW_URL', '');
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_NEW_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_NEW_URL', '');
+        }
         $url = $dtalk_url . '/v1.0/calendar/users/' . $param['unionid'] . '/calendars/primary/events?showDeleted=false&timeMin=' . urlencode(date('c', strtotime($param['start_time']))) . '&timeMax=' . urlencode(date('c', strtotime($param['end_time'])));
         $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
         $r = $this->GuzzleHttp->get($url, $options);
@@ -51,14 +56,18 @@ class Calendar
      * @param array $param
      * @return array
      */
-    public function checkIn(array $param) : array
+    public function checkIn(array $param): array
     {
         /* 查询钉钉access_token */
         $param['new_token'] = 1;
         //新版token获取标识
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_NEW_URL', '');
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_NEW_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_NEW_URL', '');
+        }
         $url = $dtalk_url . "/v1.0/calendar/users/{$param['unionid']}/calendars/primary/events/{$param['eventId']}/checkIn";
         $data = [];
         $options['headers']['x-acs-dingtalk-access-token'] = $access_token;

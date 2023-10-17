@@ -5,6 +5,7 @@
  * @desc: 介绍
  * @LastEditTime: 2023-07-06 11:49:45
  */
+
 namespace Eykj\Dtalk;
 
 use Eykj\Base\GuzzleHttp;
@@ -18,7 +19,7 @@ class Service
     protected ?AuthInterface $AuthInterface;
 
     // 通过设置参数为 nullable，表明该参数为一个可选参数
-    public function __construct(?GuzzleHttp $GuzzleHttp,?AuthInterface $AuthInterface)
+    public function __construct(?GuzzleHttp $GuzzleHttp, ?AuthInterface $AuthInterface)
     {
         $this->GuzzleHttp = $GuzzleHttp;
         $this->AuthInterface = $AuthInterface;
@@ -44,7 +45,12 @@ class Service
         if (!redis()->get($param['corpid'] . '_' . $param['corp_product'] . '_jsapi_ticket_token')) {
             $access_token = $this->get_access_token($param);
             /* 获取配置url */
-            $dtalk_url = env('DTALK_URL', 'https://oapi.dingtalk.com');
+            /* 获取配置url */
+            if ($param['types'] == 'diy') {
+                $dtalk_url = env('DTALK_DIY_URL', '');
+            } else {
+                $dtalk_url = env('DTALK_URL', '');
+            }
             $url = $dtalk_url . '/get_jsapi_ticket?access_token=' . $access_token;
             $r = $this->GuzzleHttp->get($url);
             if ($r["errcode"] == 0) {

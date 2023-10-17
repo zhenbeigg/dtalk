@@ -6,6 +6,7 @@
  * @desc: 介绍
  * @LastEditTime: 2022-04-13 21:12:30
  */
+
 namespace Eykj\Dtalk;
 
 use Eykj\Base\GuzzleHttp;
@@ -16,13 +17,13 @@ use function Hyperf\Support\env;
 class Message
 {
     protected ?GuzzleHttp $GuzzleHttp;
-    
+
     protected ?Service $Service;
 
     protected ?AuthInterface $AuthInterface;
-    
+
     // 通过设置参数为 nullable，表明该参数为一个可选参数
-    public function __construct(?GuzzleHttp $GuzzleHttp,?Service $Service,?AuthInterface $AuthInterface)
+    public function __construct(?GuzzleHttp $GuzzleHttp, ?Service $Service, ?AuthInterface $AuthInterface)
     {
         $this->GuzzleHttp = $GuzzleHttp;
         $this->Service = $Service;
@@ -34,12 +35,17 @@ class Message
      * @param {array} $param
      * @return {array} $r
      */
-    public function asyncsend_v2(array $param) : array
+    public function asyncsend_v2(array $param): array
     {
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_URL', '');
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
         $url = $dtalk_url . '/topapi/message/corpconversation/asyncsend_v2?access_token=' . $access_token;
         return $this->GuzzleHttp->post($url, $param['data']);
     }
@@ -49,12 +55,17 @@ class Message
      * @param {array} $param
      * @return {array} $r
      */
-    public function sendbytemplate(array $param) : array
+    public function sendbytemplate(array $param): array
     {
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_URL', '');
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
         $url = $dtalk_url . '/topapi/message/corpconversation/sendbytemplate?access_token=' . $access_token;
         $param['userid_list'] = $param['userid_list'] ?? $param['userid'];
         $filter = eyc_array_key($param, 'corpid,types,corp_product');

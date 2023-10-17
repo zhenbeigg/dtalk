@@ -5,6 +5,7 @@
  * @desc: 介绍
  * @LastEditTime: 2022-02-10 20:28:05
  */
+
 namespace Eykj\Dtalk;
 
 use Eykj\Base\GuzzleHttp;
@@ -18,7 +19,7 @@ class Process
     protected ?Service $Service;
 
     // 通过设置参数为 nullable，表明该参数为一个可选参数
-    public function __construct(?GuzzleHttp $GuzzleHttp,?Service $Service)
+    public function __construct(?GuzzleHttp $GuzzleHttp, ?Service $Service)
     {
         $this->GuzzleHttp = $GuzzleHttp;
         $this->Service = $Service;
@@ -37,12 +38,17 @@ class Process
      * @param array $param
      * @return array
      */
-    public function listbyuserid(array $param) : array
+    public function listbyuserid(array $param): array
     {
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_URL', '');
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
         $url = $dtalk_url . '/topapi/process/listbyuserid?access_token=' . $access_token;
         $data = eyc_array_key($param, 'userid');
         $data['offset'] = $this->offset;

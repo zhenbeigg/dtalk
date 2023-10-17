@@ -5,6 +5,7 @@
  * @desc: 介绍
  * @LastEditTime: 2022-03-15 23:39:38
  */
+
 namespace Eykj\Dtalk;
 
 use Eykj\Base\GuzzleHttp;
@@ -29,12 +30,17 @@ class Topapi
      * @param array $param
      * @return array
      */
-    public function process_save(array $param) : array
+    public function process_save(array $param): array
     {
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_URL', '');
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
         $url = $dtalk_url . '/topapi/process/save?access_token=' . $access_token;
         $data = eyc_array_key($param, 'saveProcessRequest');
         $r = $this->GuzzleHttp->post($url, $data);
@@ -49,12 +55,17 @@ class Topapi
      * @param array $param
      * @return array
      */
-    public function processinstance_create(array $param) : array
+    public function processinstance_create(array $param): array
     {
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_URL', '');
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
         $url = $dtalk_url . '/topapi/processinstance/create?access_token=' . $access_token;
         $data = eyc_array_key($param, 'agent_id,process_code,originator_user_id,dept_id,approvers,approvers_v2,cc_list,cc_position,form_component_values');
         $r = $this->GuzzleHttp->post($url, $data);

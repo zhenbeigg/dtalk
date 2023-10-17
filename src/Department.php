@@ -35,7 +35,12 @@ class Department
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_URL', '');
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
         $url = $dtalk_url . '/topapi/v2/department/listsub?access_token=' . $access_token . '&dept_id=' . $param['dept_id'];
         $r = $this->GuzzleHttp->get($url);
         if (!$r) {
@@ -63,7 +68,12 @@ class Department
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_URL', '');
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
         $url = $dtalk_url . '/topapi/v2/department/listparentbydept?access_token=' . $access_token;
         $data['dept_id'] = $param['dept_id'];
         $r = $this->GuzzleHttp->post($url, $data);
@@ -92,7 +102,12 @@ class Department
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_URL', '');
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
         $url = $dtalk_url . '/topapi/v2/department/create?access_token=' . $access_token;
         $data = eyc_array_key($param, 'name,parent_id,hide_dept,dept_permits,user_permits,outer_dept,outer_dept_only_self,outer_permit_users,outer_permit_depts,create_dept_group,auto_approve_apply,order,source_identifier');
         $r = $this->GuzzleHttp->post($url, $data);
@@ -112,7 +127,12 @@ class Department
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_URL', '');
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
         $url = $dtalk_url . '/topapi/v2/department/update?access_token=' . $access_token;
         $data = eyc_array_key($param, 'dept_id,name,parent_id,hide_dept,dept_permits,user_permits,outer_dept,outer_dept_only_self,outer_permit_users,outer_permit_depts,create_dept_group,auto_approve_apply,order,source_identifier,language,auto_add_user,dept_manager_userid_list,group_contain_sub_dept,group_contain_outer_dept,group_contain_hidden_dept,org_dept_owner,force_update_fields');
         $r = $this->GuzzleHttp->post($url, $data);
@@ -132,7 +152,12 @@ class Department
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_URL', '');
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
         $url = $dtalk_url . '/topapi/v2/department/get?access_token=' . $access_token;
         $data = eyc_array_key($param, 'dept_id,language');
         $r = $this->GuzzleHttp->post($url, $data);
@@ -149,7 +174,12 @@ class Department
             } catch (\Throwable $th) {
                 return [];
             }
-            $dtalk_url = env('DTALK_URL', '');
+            /* 获取配置url */
+            if ($param['types'] == 'diy') {
+                $dtalk_url = env('DTALK_DIY_URL', '');
+            } else {
+                $dtalk_url = env('DTALK_URL', '');
+            }
             $url = $dtalk_url . '/topapi/v2/department/get?access_token=' . $access_token;
             $data = eyc_array_key($param, 'dept_id,language');
             $r = $this->GuzzleHttp->post($url, $data);
@@ -171,7 +201,12 @@ class Department
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_URL', '');
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
         $url = $dtalk_url . '/topapi/v2/department/listsubid?access_token=' . $access_token;
         $data = eyc_array_key($param, 'dept_id');
         $r = $this->GuzzleHttp->post($url, $data);

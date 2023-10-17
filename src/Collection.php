@@ -5,6 +5,7 @@
  * @desc: 介绍
  * @LastEditTime: 2022-01-19 14:03:57
  */
+
 namespace Eykj\Dtalk;
 
 use Eykj\Base\GuzzleHttp;
@@ -18,7 +19,7 @@ class Collection
     protected ?Service $Service;
 
     // 通过设置参数为 nullable，表明该参数为一个可选参数
-    public function __construct(?GuzzleHttp $GuzzleHttp,?Service $Service)
+    public function __construct(?GuzzleHttp $GuzzleHttp, ?Service $Service)
     {
         $this->GuzzleHttp = $GuzzleHttp;
         $this->Service = $Service;
@@ -42,7 +43,12 @@ class Collection
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_URL', '');
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
         $url = $dtalk_url . '/topapi/collection/form/list?access_token=' . $access_token;
         $data = eyc_array_key($param, 'creator,biz_type');
         $data['offset'] = $this->offset;
@@ -75,7 +81,12 @@ class Collection
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_URL', '');
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
         $url = $dtalk_url . '/topapi/collection/instance/list?access_token=' . $access_token;
         $data = eyc_array_key($param, 'form_code,action_date,biz_type');
         $data['offset'] = $this->offset;

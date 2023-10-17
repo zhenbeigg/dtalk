@@ -43,7 +43,12 @@ class Attendance
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_URL', 'https://oapi.dingtalk.com');
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
         $url = $dtalk_url . '/attendance/listRecord?access_token=' . $access_token;
         $data = eyc_array_key($param, 'checkDateFrom,checkDateTo,isI18n');
         $data['userIds'] = isset($param['userIds']) ? $param['userIds'] : [$param['userid']];
@@ -64,7 +69,12 @@ class Attendance
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_URL', 'https://oapi.dingtalk.com');
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
         $url = $dtalk_url . '/topapi/attendance/shift/list?access_token=' . $access_token;
         $data['op_user_id'] = isset($param['op_user_id']) ? $param['op_user_id'] : $param['userid'];
         $r = $this->GuzzleHttp->post($url, $data);

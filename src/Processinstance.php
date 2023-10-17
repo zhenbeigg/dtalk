@@ -5,6 +5,7 @@
  * @desc: 介绍
  * @LastEditTime: 2022-10-28 15:35:48
  */
+
 namespace Eykj\Dtalk;
 
 use Eykj\Base\GuzzleHttp;
@@ -18,7 +19,7 @@ class Processinstance
     protected ?Service $Service;
 
     // 通过设置参数为 nullable，表明该参数为一个可选参数
-    public function __construct(?GuzzleHttp $GuzzleHttp,?Service $Service)
+    public function __construct(?GuzzleHttp $GuzzleHttp, ?Service $Service)
     {
         $this->GuzzleHttp = $GuzzleHttp;
         $this->Service = $Service;
@@ -37,12 +38,17 @@ class Processinstance
      * @param array $param
      * @return array
      */
-    public function listids(array $param) : array
+    public function listids(array $param): array
     {
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_URL', '');
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
         $url = $dtalk_url . '/topapi/processinstance/listids?access_token=' . $access_token;
         $data = eyc_array_key($param, 'process_code,start_time,end_time,userid_list');
         $data['cursor'] = $this->cursor;
@@ -67,12 +73,17 @@ class Processinstance
      * @param array $param
      * @return array
      */
-    public function get(array $param) : array
+    public function get(array $param): array
     {
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_URL', '');
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
         $url = $dtalk_url . '/topapi/processinstance/get?access_token=' . $access_token;
         $data = eyc_array_key($param, 'process_instance_id');
         $r = $this->GuzzleHttp->post($url, $data);

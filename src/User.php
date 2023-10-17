@@ -5,6 +5,7 @@
  * @desc: 介绍
  * @LastEditTime: 2023-08-31 19:52:57
  */
+
 namespace Eykj\Dtalk;
 
 use Eykj\Base\GuzzleHttp;
@@ -37,12 +38,17 @@ class User
      * @param array $param
      * @return array
      */
-    public function create(array $param) : array
+    public function create(array $param): array
     {
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_URL', '');
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
         $url = $dtalk_url . '/topapi/v2/user/create?access_token=' . $access_token;
         $data = eyc_array_key($param, 'name,mobile,hide_mobile,telephone,job_number,title,email,org_email,work_place,remark,dept_id_list,dept_order_list,dept_title_list,dept_position_list,dept_position_list.dept_id,dept_position_list.dept_id,dept_position_list.dept_id,dept_position_list.dept_id,extension,senior_mode,hired_date,login_email,exclusive_account,exclusive_account_type,login_id,init_password,init_password,manager_userid,exclusive_mobile,exclusive_mobile_verify_status,outer_exclusive_corpid,outer_exclusive_userid,avatarMediaId,nickname');
         return $this->GuzzleHttp->post($url, $data);
@@ -53,12 +59,17 @@ class User
      * @param array $param
      * @return array
      */
-    public function list(array $param) : array
+    public function list(array $param): array
     {
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_URL', '');
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
         $url = $dtalk_url . '/topapi/v2/user/list?access_token=' . $access_token;
         $data = array('dept_id' => $param['dept_id'], 'cursor' => $this->cursor, 'size' => $this->size, 'contain_access_limit' => true);
         $r = $this->GuzzleHttp->post($url, $data);
@@ -82,12 +93,17 @@ class User
      * @param array $param
      * @return array
      */
-    public function listid(array $param) : array
+    public function listid(array $param): array
     {
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_URL', '');
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
         $url = $dtalk_url . '/topapi/user/listid?access_token=' . $access_token;
         $data = array('dept_id' => $param['dept_id'], 'cursor' => $this->cursor, 'size' => $this->size);
         $r = $this->GuzzleHttp->post($url, $data);
@@ -102,12 +118,17 @@ class User
      * @param array $param
      * @return array
      */
-    public function get(array $param) : array
+    public function get(array $param): array
     {
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_URL', '');
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
         $url = $dtalk_url . '/topapi/v2/user/get?access_token=' . $access_token . '&userid=' . $param['userid'];
         $r = $this->GuzzleHttp->get($url);
         /* 请求的员工userid不在授权范围内,切换为内部应用信息 */
@@ -121,7 +142,12 @@ class User
                 return [];
             }
             /* 获取配置url */
-            $dtalk_url = env('DTALK_URL', '');
+            /* 获取配置url */
+            if ($param['types'] == 'diy') {
+                $dtalk_url = env('DTALK_DIY_URL', '');
+            } else {
+                $dtalk_url = env('DTALK_URL', '');
+            }
             $url = $dtalk_url . '/topapi/v2/user/get?access_token=' . $access_token . '&userid=' . $param['userid'];
             $r = $this->GuzzleHttp->get($url);
         }
@@ -137,12 +163,17 @@ class User
      * @param {array} $param
      * @return {array} $r
      */
-    public function getuserinfo(array $param) : array
+    public function getuserinfo(array $param): array
     {
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_URL', '');
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
         $url = $dtalk_url . '/topapi/v2/user/getuserinfo?access_token=' . $access_token;
         $data['code'] = $param['code'];
         $r = $this->GuzzleHttp->post($url, $data);
@@ -157,12 +188,17 @@ class User
      * @param {array} $param
      * @return {array} $r
      */
-    public function count(array $param) : int
+    public function count(array $param): int
     {
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_URL', '');
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
         $url = $dtalk_url . '/topapi/user/count?access_token=' . $access_token;
         $data = eyc_array_key($param, 'only_active');
         $r = $this->GuzzleHttp->post($url, $data);
@@ -177,12 +213,17 @@ class User
      * @param {array} $param
      * @return {array} $r
      */
-    public function listadmin(array $param) : array
+    public function listadmin(array $param): array
     {
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_URL', '');
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
         $url = $dtalk_url . '/topapi/user/listadmin?access_token=' . $access_token;
         $r = $this->GuzzleHttp->get($url);
         if ($r['errcode'] != 0) {
@@ -196,13 +237,18 @@ class User
      * @param {array} $param
      * @return {array} $r
      */
-    public function getbymobile(array $param) : array
+    public function getbymobile(array $param): array
     {
         $param['types'] = 'diy';
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_URL', '');
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
         $url = $dtalk_url . '/topapi/v2/user/getbymobile?access_token=' . $access_token;
         $data = eyc_array_key($param, 'mobile');
         $r = $this->GuzzleHttp->post($url, $data);

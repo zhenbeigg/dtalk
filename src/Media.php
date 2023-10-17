@@ -6,6 +6,7 @@
  * @desc: 介绍
  * @LastEditTime: 2023-07-06 22:29:47
  */
+
 namespace Eykj\Dtalk;
 
 use Eykj\Base\GuzzleHttp;
@@ -19,7 +20,7 @@ class Media
     protected ?Service $Service;
 
     // 通过设置参数为 nullable，表明该参数为一个可选参数
-    public function __construct(?GuzzleHttp $GuzzleHttp,?Service $Service)
+    public function __construct(?GuzzleHttp $GuzzleHttp, ?Service $Service)
     {
         $this->GuzzleHttp = $GuzzleHttp;
         $this->Service = $Service;
@@ -30,15 +31,20 @@ class Media
      * @param {array} $param
      * @return {array} $r
      */
-    public function upload(array $param) : string
+    public function upload(array $param): string
     {
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_URL', '');
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
         $url = $dtalk_url . '/media/upload?access_token=' . $access_token;
         $type['name'] = 'type';
-        $type['contents'] = $param['type']??'file';
+        $type['contents'] = $param['type'] ?? 'file';
         $media['name'] = 'media';
         $media['contents'] = fopen($param['file'], 'r+');
         $data[] = $type;

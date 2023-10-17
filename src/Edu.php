@@ -41,7 +41,12 @@ class Edu
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_URL', '');
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
         $url = $dtalk_url . '/topapi/edu/dept/get?access_token=' . $access_token;
         $data = eyc_array_key($param, 'dept_id');
         $r = $this->GuzzleHttp->post($url, $data);
@@ -62,7 +67,12 @@ class Edu
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_URL', '');
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
         $url = $dtalk_url . '/topapi/edu/dept/list?access_token=' . $access_token;
         $data = array('page_no' => $this->page_no, 'page_size' => $this->page_size);
         $data = eyc_array_insert($data, $param, 'super_id|dept_id');
@@ -92,7 +102,12 @@ class Edu
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_URL', '');
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
         $url = $dtalk_url . '/topapi/edu/user/list?access_token=' . $access_token;
         $data = array('page_no' => $this->page_no, 'page_size' => $this->page_size);
         $data = eyc_array_insert($data, $param, 'class_id|dept_id,role');
@@ -122,7 +137,12 @@ class Edu
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_URL', '');
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
         $url = $dtalk_url . '/topapi/edu/user/get?access_token=' . $access_token;
         $data = eyc_array_key($param, 'class_id,role,userid');
         $r = $this->GuzzleHttp->post($url, $data);
@@ -143,7 +163,12 @@ class Edu
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_URL', '');
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
         $url = $dtalk_url . '/topapi/edu/user/relation/list?access_token=' . $access_token;
         $data = array('page_no' => $this->page_no, 'page_size' => $this->page_size);
         $data = eyc_array_insert($data, $param, 'class_id|dept_id');
@@ -173,7 +198,12 @@ class Edu
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_URL', '');
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
         $url = $dtalk_url . '/topapi/edu/user/relation/get?access_token=' . $access_token;
         $data = eyc_array_key($param, 'from_userid|userid,class_id');
         $r = $this->GuzzleHttp->post($url, $data);
@@ -194,7 +224,12 @@ class Edu
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_URL', '');
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
         $url = $dtalk_url . '/topapi/edu/class/studentinfo/get?access_token=' . $access_token;
         $data = eyc_array_key($param, 'class_id,app_id,userid');
         $r = $this->GuzzleHttp->post($url, $data);
@@ -215,7 +250,12 @@ class Edu
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_URL', '');
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
         $url = $dtalk_url . '/topapi/edu/class/studentid/get?access_token=' . $access_token;
         $data = eyc_array_key($param, 'class_id,app_id,userid');
         $r = $this->GuzzleHttp->post($url, $data);

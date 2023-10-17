@@ -5,6 +5,7 @@
  * @desc: 介绍
  * @LastEditTime: 2022-11-04 14:20:20
  */
+
 namespace Eykj\Dtalk;
 
 use Eykj\Base\GuzzleHttp;
@@ -18,7 +19,7 @@ class Codes
     protected ?Service $Service;
 
     // 通过设置参数为 nullable，表明该参数为一个可选参数
-    public function __construct(?GuzzleHttp $GuzzleHttp,?Service $Service)
+    public function __construct(?GuzzleHttp $GuzzleHttp, ?Service $Service)
     {
         $this->GuzzleHttp = $GuzzleHttp;
         $this->Service = $Service;
@@ -29,14 +30,18 @@ class Codes
      * @param array $param
      * @return array
      */
-    public function userInstances(array $param) : array
+    public function userInstances(array $param): array
     {
         /* 查询钉钉access_token */
         $param['new_token'] = 1;
         //新版token获取标识
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_NEW_URL', '');
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_NEW_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_NEW_URL', '');
+        }
         $url = $dtalk_url . '/v1.0/badge/codes/userInstances';
         $data = eyc_array_key($param, 'requestId,codeIdentity,codeValue,status,corpId,userCorpRelationType,availableTimes,extInfo');
         $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
@@ -52,14 +57,18 @@ class Codes
      * @param array $param
      * @return array
      */
-    public function decode(array $param) : array
+    public function decode(array $param): array
     {
         /* 查询钉钉access_token */
         $param['new_token'] = 1;
         //新版token获取标识
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_NEW_URL', '');
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_NEW_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_NEW_URL', '');
+        }
         $url = $dtalk_url . '/v1.0/badge/codes/decode';
         $data = eyc_array_key($param, 'payCode|auth_code,requestId|request_id');
         $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
@@ -75,14 +84,18 @@ class Codes
      * @param array $param
      * @return array
      */
-    public function payResults(array $param) : array
+    public function payResults(array $param): array
     {
         /* 查询钉钉access_token */
         $param['new_token'] = 1;
         //新版token获取标识
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_NEW_URL', '');
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_NEW_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_NEW_URL', '');
+        }
         $url = $dtalk_url . '/v1.0/badge/codes/payResults';
         $data = eyc_array_key($param, 'payCode,corpId,userId,gmtTradeCreate,gmtTradeFinish,tradeNo,tradeStatus,title,remark,amount,promotionAmount,chargeAmount,payChannelDetailList,tradeErrorCode,tradeErrorMsg,extInfo,merchantName');
         $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
@@ -98,14 +111,18 @@ class Codes
      * @param array $param
      * @return array
      */
-    public function corpInstances(array $param) : array
+    public function corpInstances(array $param): array
     {
         /* 查询钉钉access_token */
         $param['new_token'] = 1;
         //新版token获取标识
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_NEW_URL', '');
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_NEW_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_NEW_URL', '');
+        }
         $url = $dtalk_url . '/v1.0/badge/codes/corpInstances';
         $data = eyc_array_key($param, 'codeIdentity,corpId,status');
         $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
@@ -121,14 +138,18 @@ class Codes
      * @param array $param
      * @return array
      */
-    public function notices(array $param) : array
+    public function notices(array $param): array
     {
         /* 查询钉钉access_token */
         $param['new_token'] = 1;
         //新版token获取标识
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_NEW_URL', '');
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_NEW_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_NEW_URL', '');
+        }
         $url = $dtalk_url . '/v1.0/badge/notices';
         $data = eyc_array_key($param, 'userId,msgId,msgType,content');
         $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
