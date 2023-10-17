@@ -35,7 +35,6 @@ class Topapi
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        /* 获取配置url */
         if ($param['types'] == 'diy') {
             $dtalk_url = env('DTALK_DIY_URL', '');
         } else {
@@ -59,7 +58,6 @@ class Topapi
     {
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
-        /* 获取配置url */
         /* 获取配置url */
         if ($param['types'] == 'diy') {
             $dtalk_url = env('DTALK_DIY_URL', '');

@@ -6,6 +6,7 @@
  * @LastEditTime: 2023-07-06 21:38:27
  * @FilePath: \dtalk\src\Attendance.php
  */
+
 namespace Eykj\Dtalk;
 
 use Eykj\Base\GuzzleHttp;
@@ -19,7 +20,7 @@ class Attendance
     protected ?Service $Service;
 
     // 通过设置参数为 nullable，表明该参数为一个可选参数
-    public function __construct(?GuzzleHttp $GuzzleHttp,?Service $Service)
+    public function __construct(?GuzzleHttp $GuzzleHttp, ?Service $Service)
     {
         $this->GuzzleHttp = $GuzzleHttp;
         $this->Service = $Service;
@@ -38,11 +39,10 @@ class Attendance
      * @param array $param
      * @return array
      */
-    public function listRecord(array $param) : array
+    public function listRecord(array $param): array
     {
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
-        /* 获取配置url */
         /* 获取配置url */
         if ($param['types'] == 'diy') {
             $dtalk_url = env('DTALK_DIY_URL', '');
@@ -64,11 +64,10 @@ class Attendance
      * @param array $param
      * @return array
      */
-    public function shift_list(array $param) : array
+    public function shift_list(array $param): array
     {
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
-        /* 获取配置url */
         /* 获取配置url */
         if ($param['types'] == 'diy') {
             $dtalk_url = env('DTALK_DIY_URL', '');
