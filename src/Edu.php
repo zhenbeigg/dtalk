@@ -10,7 +10,7 @@
 
 namespace Eykj\Dtalk;
 
-use App\Core\GuzzleHttp;
+use Eykj\Base\GuzzleHttp;
 use Eykj\Dtalk\Service;
 
 class Edu
