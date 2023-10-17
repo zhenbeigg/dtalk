@@ -10,18 +10,21 @@
 
 namespace Eykj\Dtalk;
 
-use Hyperf\Di\Annotation\Inject;
 use App\Core\GuzzleHttp;
 use Eykj\Dtalk\Service;
 
 class Edu
 {
+    protected ?GuzzleHttp $GuzzleHttp;
 
-    #[Inject]
-    protected GuzzleHttp $GuzzleHttp;
+    protected ?Service $Service;
 
-    #[Inject]
-    protected Service $Service;
+    // 通过设置参数为 nullable，表明该参数为一个可选参数
+    public function __construct(?GuzzleHttp $GuzzleHttp, ?Service $Service)
+    {
+        $this->GuzzleHttp = $GuzzleHttp;
+        $this->Service = $Service;
+    }
     /**
      * 分页条数
      */

@@ -3,7 +3,7 @@
  * @author: 布尔
  * @name: 钉钉用户接口类
  * @desc: 介绍
- * @LastEditTime: 2023-08-31 19:52:57
+ * @LastEditTime: 2023-09-27 13:48:21
  */
 
 namespace Eykj\Dtalk;
