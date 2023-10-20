@@ -82,4 +82,30 @@ class Attendance
         }
         return $r["result"]['result'];
     }
+    /**
+     * @author: 布尔
+     * @name: 获取用户考勤数据
+     * @param array $param
+     * @return array
+     */
+    public function getupdatedata(array $param): array
+    {
+        /* 查询钉钉access_token */
+        $param["types"] = "diy";
+        $param["corp_product"] = "service";
+        $access_token = $this->Service->get_access_token($param);
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
+        $url = $dtalk_url . '/topapi/attendance/getupdatedata?access_token=' . $access_token;
+        $data = array("userid" => $param['userid'], "work_date" => $param['work_date']);
+        $r = $this->GuzzleHttp->post($url, $data);
+        if ($r['errcode'] != 0) {
+            return [];
+        }
+        return $r["result"];
+    }
 }
