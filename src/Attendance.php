@@ -3,7 +3,7 @@
  * @author: 布尔
  * @name: 钉钉考勤接口类
  * @desc: 介绍
- * @LastEditTime: 2023-07-06 21:38:27
+ * @LastEditTime: 2023-11-08 16:45:52
  * @FilePath: \dtalk\src\Attendance.php
  */
 
@@ -102,6 +102,32 @@ class Attendance
         }
         $url = $dtalk_url . '/topapi/attendance/getupdatedata?access_token=' . $access_token;
         $data = array("userid" => $param['userid'], "work_date" => $param['work_date']);
+        $r = $this->GuzzleHttp->post($url, $data);
+        if ($r['errcode'] != 0) {
+            return [];
+        }
+        return $r["result"];
+    }
+    /**
+     * @author: 布尔
+     * @name: 上传打卡记录-内部应用-专业版专用接口
+     * @param array $param
+     * @return array
+     */
+    public function record_upload(array $param): array
+    {
+        /* 查询钉钉access_token */
+        $param["types"] = "diy";
+        $param["corp_product"] = "service";
+        $access_token = $this->Service->get_access_token($param);
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
+        $url = $dtalk_url . '/topapi/attendance/record/upload?access_token=' . $access_token;
+        $data = eyc_array_key($param, 'userid,device_name,device_id,photo_url,user_check_time');
         $r = $this->GuzzleHttp->post($url, $data);
         if ($r['errcode'] != 0) {
             return [];
