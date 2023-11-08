@@ -128,10 +128,6 @@ class Attendance
         }
         $url = $dtalk_url . '/topapi/attendance/record/upload?access_token=' . $access_token;
         $data = eyc_array_key($param, 'userid,device_name,device_id,photo_url,user_check_time');
-        $r = $this->GuzzleHttp->post($url, $data);
-        if ($r['errcode'] != 0) {
-            return [];
-        }
-        return $r["result"];
+        return  $this->GuzzleHttp->post($url, $data);
     }
 }
