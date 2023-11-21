@@ -1,9 +1,9 @@
 <?php
 /*
  * @author: 布尔
- * @name: 审批
+ * @name: 审批-ocr识别
  * @desc: 介绍
- * @LastEditTime: 2022-03-15 23:39:38
+ * @LastEditTime: 2023-11-21 15:35:53
  */
 
 namespace Eykj\Dtalk;
@@ -71,5 +71,37 @@ class Topapi
             error(500, $r['errmsg']);
         }
         return $r;
+    }
+
+     /**
+     * @author: 布尔
+     * @name: ocr文字识别
+     * @param array $param
+     * @return array
+     */
+    public function ocr_structured_recognize($param):array
+    {
+        //还不了解get_access_token需要的参数具体内容是什么
+        $token_param=eyc_array_key($param, "corpid,types,corp_product");
+        $access_token=$this->Service->get_access_token($token_param);
+       /* 获取配置url */
+       if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
+        $url=$dtalk_url.'/topapi/ocr/structured/recognize?access_token='.$access_token;
+        $data=array(
+            'image_url'     => $param['image_url']??'',
+            'type'          => $param['type']??'driving_license'
+        );
+        $r=$this->GuzzleHttp->post($url,$data);
+        if($r['errcode'] != 0){
+            error(500,'图片不匹配');
+        }
+        if(isset($r['result']['data'])){
+            $r['result']['data']=json_decode($r['result']['data'],true);
+        }
+        return $r['result'];
     }
 }
