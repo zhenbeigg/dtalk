@@ -3,7 +3,7 @@
  * @author: 布尔
  * @name: 日程
  * @desc: 介绍
- * @LastEditTime: 2022-03-15 17:30:22
+ * @LastEditTime: 2023-12-05 22:13:36
  */
 
 namespace Eykj\Dtalk;
@@ -45,6 +45,16 @@ class Calendar
         $url = $dtalk_url . '/v1.0/calendar/users/' . $param['unionid'] . '/calendars/primary/events?showDeleted=false&timeMin=' . urlencode(date('c', strtotime($param['start_time']))) . '&timeMax=' . urlencode(date('c', strtotime($param['end_time'])));
         $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
         $r = $this->GuzzleHttp->get($url, $options);
+        if (isset($r["nextToken"])) {
+            $nextToken = $r['nextToken'];
+            do {
+                $rs = $this->GuzzleHttp->get($url.'&nextToken='. $nextToken,$options);
+                $r = array_merge_recursive($r, $rs);
+                if(isset($rs["nextToken"])){
+                    $nextToken = $rs['nextToken'];
+                }
+            } while (isset($rs["nextToken"]));
+        }
         if (isset($r['events'])) {
             return $r['events'];
         }
