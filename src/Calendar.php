@@ -48,11 +48,8 @@ class Calendar
         if (isset($r["nextToken"])) {
             $nextToken = $r['nextToken'];
             do {
-                $rs = $this->GuzzleHttp->get($url.'&nextToken='. $nextToken,$options);
+                $rs = $this->GuzzleHttp->get($url.'&nextToken='.$r['nextToken'],$options);
                 $r = array_merge_recursive($r, $rs);
-                if(isset($rs["nextToken"])){
-                    $nextToken = $rs['nextToken'];
-                }
             } while (isset($rs["nextToken"]));
         }
         if (isset($r['events'])) {
