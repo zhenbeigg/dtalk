@@ -73,10 +73,14 @@ class User
         $r = $this->GuzzleHttp->post($url, $data);
         if ($r["errcode"] == 0) {
             if ($r["result"]["has_more"]) {
+                $cursor = $r['result']['next_cursor'];
                 do {
-                    $data['cursor'] = $r['result']['next_cursor'];
+                    $data['cursor'] = $cursor;
                     $rs = $this->GuzzleHttp->post($url, $data);
                     $r = array_merge_recursive($r, $rs);
+                    if(isset($rs['result']['next_cursor'])){
+                        $cursor =  $rs['result']['next_cursor'];
+                    }
                 } while ($rs["result"]["has_more"]);
             }
         } else {
