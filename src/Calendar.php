@@ -46,7 +46,6 @@ class Calendar
         $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
         $r = $this->GuzzleHttp->get($url, $options);
         if (isset($r["nextToken"])) {
-            $nextToken = $r['nextToken'];
             do {
                 $rs = $this->GuzzleHttp->get($url.'&nextToken='.$r['nextToken'],$options);
                 $r = array_merge_recursive($r, $rs);
