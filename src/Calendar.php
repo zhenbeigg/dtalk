@@ -307,8 +307,15 @@ class Calendar
      */
     public function attendees(array $param)
     {
-        $dtalk_url = env('DTALK_NEW_URL', '');
+        /* 查询钉钉access_token */
+        $param['new_token'] = 1;
         $access_token = $this->Service->get_access_token($param);
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_NEW_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_NEW_URL', '');
+        }
         $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
         $url = $dtalk_url .'/v1.0/calendar/users/'.$param['unionid'].'/calendars/primary/events/'.$param['event_id'].'/attendees';
         $data['attendeesToAdd']=$param['attendeesToAdd'];
@@ -327,7 +334,11 @@ class Calendar
         //新版token获取标识
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_NEW_URL', '');
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_NEW_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_NEW_URL', '');
+        }
         $url = $dtalk_url . "/v1.0/calendar/users/{$param['unionid']}/calendars/primary/events/{$param['eventId']}";
         $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
         return $this->GuzzleHttp->get($url, $options);
@@ -345,7 +356,11 @@ class Calendar
         //新版token获取标识
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_NEW_URL', '');
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_NEW_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_NEW_URL', '');
+        }
         $url = $dtalk_url . "/v1.0/calendar/users/{$param['unionid']}/calendars/primary/events/{$param['eventId']}/signin";
         $data = eyc_array_key($param, 'unionid,eventId');
         $data['calendarId'] = 'primary';
@@ -365,7 +380,11 @@ class Calendar
         //新版token获取标识
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_NEW_URL', '');
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_NEW_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_NEW_URL', '');
+        }
         $url = $dtalk_url . "/v1.0/calendar/users/{$param['unionid']}/calendars/primary/events/{$param['eventId']}/signin";
         $data = ['maxResults' => $this->maxResults, 'type' => 'sign_in'];
         $urld = $url . '?' . http_build_query($data);
@@ -394,7 +413,11 @@ class Calendar
         //新版token获取标识
         $access_token = $this->Service->get_access_token($param);
         /* 获取配置url */
-        $dtalk_url = env('DTALK_NEW_URL', '');
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_NEW_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_NEW_URL', '');
+        }
         $url = $dtalk_url . "/v1.0/calendar/users/{$param['unionid']}/calendars/primary/events/{$param['eventId']}/signOut";
         $data = ['maxResults' => $this->maxResults, 'type' => 'sign_out'];
         $urld = $url . '?' . http_build_query($data);
