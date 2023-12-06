@@ -80,7 +80,7 @@ class Calendar
         } else {
             $dtalk_url = env('DTALK_NEW_URL', '');
         }
-        $url = $dtalk_url . '/v1.0/calendar/users/' . $param['unionid'] . '/calendars/primary/eventsview?timeMin=' . urlencode(date('c', strtotime($param['start_time']))) . '&timeMax=' . urlencode(date('c', strtotime($param['end_time'])));
+        $url = $dtalk_url . '/v1.0/calendar/users/' . $param['unionid'] . '/calendars\/'.$param['calendar_id'].'/eventsview?timeMin=' . urlencode(date('c', strtotime($param['start_time']))) . '&timeMax=' . urlencode(date('c', strtotime($param['end_time'])));
         $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
         $r = $this->GuzzleHttp->get($url, $options);
         if (isset($r["nextToken"])) {
