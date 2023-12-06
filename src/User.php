@@ -3,7 +3,7 @@
  * @author: 布尔
  * @name: 钉钉用户接口类
  * @desc: 介绍
- * @LastEditTime: 2023-09-27 13:48:21
+ * @LastEditTime: 2023-12-06 18:26:47
  */
 
 namespace Eykj\Dtalk;
@@ -253,4 +253,31 @@ class User
         }
         return $r["result"];
     }
+
+        /**
+     * @author: 布尔
+     * @name: 根据unionid获取用户userid
+     * @param {array} $param
+     * @return {array} $r
+     */
+    public function user_getbyunionid(array $param) : array
+    {
+        /* 查询钉钉access_token */
+        $access_token = $this->Service->get_access_token($param);
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
+        $url = $dtalk_url . '/topapi/user/getbyunionid?access_token=' . $access_token;
+        $data = eyc_array_key($param, 'unionid');
+        $r = $this->GuzzleHttp->post($url, $data);
+        if ($r['errcode'] != 0) {
+            alog($r,2);
+            return [];
+        }
+        return $r["result"];
+    }
+
 }
