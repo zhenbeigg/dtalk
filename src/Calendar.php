@@ -3,7 +3,7 @@
  * @author: 布尔
  * @name: 日程
  * @desc: 介绍
- * @LastEditTime: 2023-12-05 22:13:36
+ * @LastEditTime: 2023-12-06 17:10:32
  */
 
 namespace Eykj\Dtalk;
@@ -125,5 +125,123 @@ class Calendar
             error(500, $r['message']);
         }
         return $r;
+    }
+
+    /**
+     * @author: 布尔
+     * @name: 查询日历
+     * @param array $param
+     * @return array
+     */
+    public function calendars(array $param): array
+    {
+        /* 查询钉钉access_token */
+        $param['new_token'] = 1;
+        //新版token获取标识
+        $access_token = $this->Service->get_access_token($param);
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_NEW_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_NEW_URL', '');
+        }
+        $url = $dtalk_url . "/v1.0/calendar/users/{$param['unionid']}/calendars";
+        $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
+        $r = $this->GuzzleHttp->get($url, $options);
+        return $r['response']['calendars'];
+    }
+
+    /**
+     * @author: 布尔
+     * @name: 创建日程
+     * @param array $param
+     * @return array
+     */
+    public function create_events(array $param): array
+    {
+        /* 查询钉钉access_token */
+        $param['new_token'] = 1;
+        //新版token获取标识
+        $access_token = $this->Service->get_access_token($param);
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_NEW_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_NEW_URL', '');
+        }
+        $url = $dtalk_url . "/v1.0/calendar/users/{$param['unionid']}/calendars/{$param['calendar_id']}/events";
+        $data = eyc_array_key($param,'summary,description,start,end,isAllDay|is_all_day,recurrence,attendees,location,reminders,onlineMeetingInfo|on_line_meeting_info,extra,uiConfigs|ui_configs,richTextDescription|rich_text_description');
+        $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
+        return $this->GuzzleHttp->post($url, $data, $options);
+    }
+
+    /**
+     * @author: 布尔
+     * @name: 删除日程
+     * @param array $param
+     * @return array
+     */
+    public function delete_events(array $param): array
+    {
+        /* 查询钉钉access_token */
+        $param['new_token'] = 1;
+        //新版token获取标识
+        $access_token = $this->Service->get_access_token($param);
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_NEW_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_NEW_URL', '');
+        }
+        $url = $dtalk_url . "/v1.0/calendar/users/{$param['unionid']}/calendars/{$param['calendar_id']}/events/{$param['event_id']}?pushNotification=true";
+        $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
+        return $this->GuzzleHttp->get($url, $options);
+    }
+
+    /**
+     * @author: 布尔
+     * @name: 删除日程
+     * @param array $param
+     * @return array
+     */
+    public function modify_events(array $param): array
+    {
+        /* 查询钉钉access_token */
+        $param['new_token'] = 1;
+        //新版token获取标识
+        $access_token = $this->Service->get_access_token($param);
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_NEW_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_NEW_URL', '');
+        }
+        $url = $dtalk_url . "/v1.0/calendar/users/{$param['unionid']}/calendars/{$param['calendar_id']}/events/{$param['event_id']}";
+        $data = eyc_array_key($param,'summary,id|event_id,description,start,end,isAllDay|is_all,recurrence,attendees,location,reminders,onlineMeetingInfo|online_meeting_info,extra,uiConfigs|ui_configs,richTextDescription|rich_text_description');
+        $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
+        return $this->GuzzleHttp->post($url,$data, $options);
+    }
+
+    /**
+     * @author: 布尔
+     * @name: 单个日程详情
+     * @param array $param
+     * @return array
+     */
+    public function info(array $param): array
+    {
+        /* 查询钉钉access_token */
+        $param['new_token'] = 1;
+        //新版token获取标识
+        $access_token = $this->Service->get_access_token($param);
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_NEW_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_NEW_URL', '');
+        }
+        $url = $dtalk_url . "/v1.0/calendar/users/{$param['unionid']}/calendars/{$param['calendar_id']}/events/{$param['event_id']}?maxAttendees=500";
+        $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
+        return $this->GuzzleHttp->get($url, $options);
     }
 }
