@@ -24,6 +24,7 @@ class Calendar
         $this->GuzzleHttp = $GuzzleHttp;
         $this->Service = $Service;
     }
+
     /**
      * @author: 布尔
      * @name: 日程列表
@@ -60,6 +61,44 @@ class Calendar
         }
         return [];
     }
+
+    /**
+     * @author: 布尔
+     * @name: 查询日程视图
+     * @param array $param
+     * @return array
+     */
+    public function eventsview(array $param): array
+    {
+        /* 查询钉钉access_token */
+        $param['new_token'] = 1;
+        //新版token获取标识
+        $access_token = $this->Service->get_access_token($param);
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_NEW_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_NEW_URL', '');
+        }
+        $url = $dtalk_url . '/v1.0/calendar/users/' . $param['unionid'] . '/calendars/primary/eventsview?timeMin=' . urlencode(date('c', strtotime($param['start_time']))) . '&timeMax=' . urlencode(date('c', strtotime($param['end_time'])));
+        $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
+        $r = $this->GuzzleHttp->get($url, $options);
+        if (isset($r["nextToken"])) {
+            $nextToken = $r['nextToken'];
+            do {
+                $rs = $this->GuzzleHttp->get($url.'&nextToken='.$nextToken,$options);
+                $r = array_merge_recursive($r, $rs);
+                if(isset($rs['nextToken'])){
+                    $nextToken = $rs['nextToken'];
+                }
+            } while (isset($rs["nextToken"]));
+        }
+        if (isset($r['events'])) {
+            return $r['events'];
+        }
+        return [];
+    }
+
     /**
      * @author: 布尔
      * @name: 签到
