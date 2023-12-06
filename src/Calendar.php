@@ -3,7 +3,7 @@
  * @author: 布尔
  * @name: 日程
  * @desc: 介绍
- * @LastEditTime: 2023-12-06 17:22:49
+ * @LastEditTime: 2023-12-06 17:37:53
  */
 
 namespace Eykj\Dtalk;
@@ -80,7 +80,7 @@ class Calendar
         } else {
             $dtalk_url = env('DTALK_NEW_URL', '');
         }
-        $url = $dtalk_url . '/v1.0/calendar/users/' . $param['unionid'] . '/calendars\/'.$param['calendar_id'].'/eventsview?timeMin=' . urlencode(date('c', strtotime($param['start_time']))) . '&timeMax=' . urlencode(date('c', strtotime($param['end_time'])));
+        $url = $dtalk_url . '/v1.0/calendar/users/' . $param['unionid'] . '/calendars\/'.$param['calendarId'].'/eventsview?timeMin=' . urlencode(date('c', strtotime($param['start_time']))) . '&timeMax=' . urlencode(date('c', strtotime($param['end_time'])));
         $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
         $r = $this->GuzzleHttp->get($url, $options);
         if (isset($r["nextToken"])) {
@@ -117,7 +117,7 @@ class Calendar
         } else {
             $dtalk_url = env('DTALK_NEW_URL', '');
         }
-        $url = $dtalk_url . "/v1.0/calendar/users/{$param['unionid']}/calendars/primary/events/{$param['event_id']}/checkIn";
+        $url = $dtalk_url . "/v1.0/calendar/users/{$param['unionid']}/calendars/primary/events/{$param['eventId']}/checkIn";
         $data = [];
         $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
         $r = $this->GuzzleHttp->post($url, $data, $options);
@@ -172,8 +172,8 @@ class Calendar
         } else {
             $dtalk_url = env('DTALK_NEW_URL', '');
         }
-        $url = $dtalk_url . "/v1.0/calendar/users/{$param['unionid']}/calendars/{$param['calendar_id']}/events";
-        $data = eyc_array_key($param,'summary,description,start,end,isAllDay|is_all_day,recurrence,attendees,location,reminders,onlineMeetingInfo|on_line_meeting_info,extra,uiConfigs|ui_configs,richTextDescription|rich_text_description');
+        $url = $dtalk_url . "/v1.0/calendar/users/{$param['unionid']}/calendars/{$param['calendarId']}/events";
+        $data = eyc_array_key($param,'summary,description,start,end,isAllDay,recurrence,attendees,location,reminders,onlineMeetingInfo,extra,uiConfigs,richTextDescription');
         $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
         $r = $this->GuzzleHttp->post($url, $data, $options);
         if (isset($r['code'])) {
@@ -200,7 +200,7 @@ class Calendar
         } else {
             $dtalk_url = env('DTALK_NEW_URL', '');
         }
-        $url = $dtalk_url . "/v1.0/calendar/users/{$param['unionid']}/calendars/{$param['calendar_id']}/events/{$param['event_id']}?pushNotification=true";
+        $url = $dtalk_url . "/v1.0/calendar/users/{$param['unionid']}/calendars/{$param['calendarId']}/events/{$param['eventId']}?pushNotification=true";
         $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
         $r = $this->GuzzleHttp->get($url, $options);
         if (isset($r['code'])) {
@@ -227,8 +227,8 @@ class Calendar
         } else {
             $dtalk_url = env('DTALK_NEW_URL', '');
         }
-        $url = $dtalk_url . "/v1.0/calendar/users/{$param['unionid']}/calendars/{$param['calendar_id']}/events/{$param['event_id']}";
-        $data = eyc_array_key($param,'summary,id|event_id,description,start,end,isAllDay|is_all,recurrence,attendees,location,reminders,onlineMeetingInfo|online_meeting_info,extra,uiConfigs|ui_configs,richTextDescription|rich_text_description');
+        $url = $dtalk_url . "/v1.0/calendar/users/{$param['unionid']}/calendars/{$param['calendarId']}/events/{$param['eventId']}";
+        $data = eyc_array_key($param,'summary,id|eventId,description,start,end,isAllDay,recurrence,attendees,location,reminders,onlineMeetingInfo,extra,uiConfigs,richTextDescription');
         $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
         $r = $this->GuzzleHttp->post($url,$data, $options);
         if (isset($r['code'])) {
@@ -255,7 +255,7 @@ class Calendar
         } else {
             $dtalk_url = env('DTALK_NEW_URL', '');
         }
-        $url = $dtalk_url . "/v1.0/calendar/users/{$param['unionid']}/calendars/{$param['calendar_id']}/events/{$param['event_id']}?maxAttendees=500";
+        $url = $dtalk_url . "/v1.0/calendar/users/{$param['unionid']}/calendars/{$param['calendarId']}/events/{$param['eventId']}?maxAttendees=500";
         $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
         $r = $this->GuzzleHttp->get($url, $options);
         if (isset($r['code'])) {
@@ -283,7 +283,7 @@ class Calendar
         } else {
             $dtalk_url = env('DTALK_NEW_URL', '');
         }
-        $url = $dtalk_url . "/v1.0/calendar/users/{$param['unionid']}/calendars/primary/events/{$param['event_id']}/signOut";
+        $url = $dtalk_url . "/v1.0/calendar/users/{$param['unionid']}/calendars/primary/events/{$param['eventId']}/signOut";
         $data = [];
         $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
         $r = $this->GuzzleHttp->post($url, $data, $options);
