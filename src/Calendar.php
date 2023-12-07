@@ -208,7 +208,7 @@ class Calendar
         }
         $url = $dtalk_url . "/v1.0/calendar/users/{$param['unionid']}/calendars/{$param['calendarId']}/events/{$param['eventId']}?pushNotification=true";
         $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
-        $r = $this->GuzzleHttp->get($url, $options);
+        $r = $this->GuzzleHttp->get($url, $options,method:'DELETE');
         if (isset($r['code'])) {
             error(500, $r['message']);
         }
@@ -236,7 +236,7 @@ class Calendar
         $url = $dtalk_url . "/v1.0/calendar/users/{$param['unionid']}/calendars/{$param['calendarId']}/events/{$param['eventId']}";
         $data = eyc_array_key($param,'summary,id|eventId,description,start,end,isAllDay,recurrence,attendees,location,reminders,onlineMeetingInfo,extra,uiConfigs,richTextDescription');
         $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
-        $r = $this->GuzzleHttp->post($url,$data, $options);
+        $r = $this->GuzzleHttp->post($url,$data, $options,method:'PUT');
         if (isset($r['code'])) {
             error(500, $r['message']);
         }
