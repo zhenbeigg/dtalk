@@ -3,7 +3,7 @@
  * @author: 布尔
  * @name: 日程
  * @desc: 介绍
- * @LastEditTime: 2023-12-06 18:42:39
+ * @LastEditTime: 2023-12-07 13:12:20
  */
 
 namespace Eykj\Dtalk;
@@ -217,7 +217,7 @@ class Calendar
 
     /**
      * @author: 布尔
-     * @name: 删除日程
+     * @name: 修改日程
      * @param array $param
      * @return array
      */
