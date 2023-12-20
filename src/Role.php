@@ -3,7 +3,7 @@
  * @author: 布尔
  * @name: 钉钉角色接口类
  * @desc: 介绍
- * @LastEditTime: 2023-12-20 15:25:51
+ * @LastEditTime: 2023-12-20 15:39:52
  */
 
 namespace Eykj\Dtalk;
@@ -25,6 +25,14 @@ class Role
         $this->Service = $Service;
     }
     /**
+     * 分页条数
+     */
+    protected $size = 100;
+    /**
+     * 偏移量
+     */
+    protected $offset = 0;
+    /**
      * @author: 布尔
      * @name: 列表
      * @param array $param
@@ -41,11 +49,13 @@ class Role
             $dtalk_url = env('DTALK_URL', '');
         }
         $url = $dtalk_url . '/topapi/role/list?access_token=' . $access_token;
-        $r = $this->GuzzleHttp->post($url, []);
+        $data = array('offset' => $this->offset, 'size' => $this->size);
+        $r = $this->GuzzleHttp->post($url, $data);
         if ($r["errcode"] == 0) {
             if ($r["result"]["hasMore"]) {
                 do {
-                    $rs = $this->GuzzleHttp->post($url,[]);
+                    $data = array('offset' => $this->size + $data['offset'], 'size' => $this->size);
+                    $rs = $this->GuzzleHttp->post($url,$data);
                     $r = array_merge_recursive($r, $rs);
                 } while ($rs["result"]["hasMore"]);
             }
