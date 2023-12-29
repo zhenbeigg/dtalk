@@ -3,7 +3,7 @@
  * @author: 布尔
  * @name: 钉钉角色接口类
  * @desc: 介绍
- * @LastEditTime: 2023-12-20 15:39:52
+ * @LastEditTime: 2023-12-29 17:17:01
  */
 
 namespace Eykj\Dtalk;
@@ -56,6 +56,39 @@ class Role
                 do {
                     $data = array('offset' => $this->size + $data['offset'], 'size' => $this->size);
                     $rs = $this->GuzzleHttp->post($url,$data);
+                    $r = array_merge_recursive($r, $rs);
+                } while ($rs["result"]["hasMore"]);
+            }
+        } else {
+            alog($r, 2);
+            return [];
+        }
+        return $r["result"]['list'];
+    }
+    /**
+     * @author: 布尔
+     * @name: 获取指定角色的员工列表
+     * @param array $param
+     * @return array
+     */
+    public function simplelist(array $param): array
+    {
+        /* 查询钉钉access_token */
+        $access_token = $this->Service->get_access_token($param);
+        /* 获取配置url */
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_URL', '');
+        }
+        $url = $dtalk_url . '/topapi/role/simplelist?access_token=' . $access_token;
+        $data = array('offset' => $this->offset, 'size' => $this->size, 'role_id' => $param['role_id']);
+        $r = $this->GuzzleHttp->post($url, $data);
+        if ($r["errcode"] == 0) {
+            if ($r["result"]["hasMore"]) {
+                do {
+                    $data = array('offset' => $this->size + $data['offset'], 'size' => $this->size, 'role_id' => $param['role_id']);
+                    $rs = $this->GuzzleHttp->post($url, $data);
                     $r = array_merge_recursive($r, $rs);
                 } while ($rs["result"]["hasMore"]);
             }
