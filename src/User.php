@@ -3,7 +3,7 @@
  * @author: 布尔
  * @name: 钉钉用户接口类
  * @desc: 介绍
- * @LastEditTime: 2023-12-06 18:26:47
+ * @LastEditTime: 2024-01-11 10:10:37
  */
 
 namespace Eykj\Dtalk;
@@ -78,7 +78,7 @@ class User
                     $data['cursor'] = $cursor;
                     $rs = $this->GuzzleHttp->post($url, $data);
                     $r = array_merge_recursive($r, $rs);
-                    if(isset($rs['result']['next_cursor'])){
+                    if (isset($rs['result']['next_cursor'])) {
                         $cursor =  $rs['result']['next_cursor'];
                     }
                 } while ($rs["result"]["has_more"]);
@@ -108,7 +108,7 @@ class User
         $url = $dtalk_url . '/topapi/user/listid?access_token=' . $access_token;
         $data = array('dept_id' => $param['dept_id'], 'cursor' => $this->cursor, 'size' => $this->size);
         $r = $this->GuzzleHttp->post($url, $data);
-        if ($r["errcode"] != 0) {
+        if (!$r || $r["errcode"] != 0) {
             error(500, $r['errmsg']);
         }
         return $r["result"]["userid_list"];
@@ -151,7 +151,7 @@ class User
             $url = $dtalk_url . '/topapi/v2/user/get?access_token=' . $access_token . '&userid=' . $param['userid'];
             $r = $this->GuzzleHttp->get($url);
         }
-        if ($r['errcode'] != 0) {
+        if (!$r || $r['errcode'] != 0) {
             alog($r, 2);
             return [];
         }
@@ -176,7 +176,7 @@ class User
         $url = $dtalk_url . '/topapi/v2/user/getuserinfo?access_token=' . $access_token;
         $data['code'] = $param['code'];
         $r = $this->GuzzleHttp->post($url, $data);
-        if ($r['errcode'] != 0) {
+        if (!$r ||  $r['errcode'] != 0) {
             error(500, $r['errmsg']);
         }
         return $r["result"];
@@ -254,13 +254,13 @@ class User
         return $r["result"];
     }
 
-        /**
+    /**
      * @author: 布尔
      * @name: 根据unionid获取用户userid
      * @param {array} $param
      * @return {array} $r
      */
-    public function user_getbyunionid(array $param) : array
+    public function user_getbyunionid(array $param): array
     {
         /* 查询钉钉access_token */
         $access_token = $this->Service->get_access_token($param);
@@ -274,10 +274,9 @@ class User
         $data = eyc_array_key($param, 'unionid');
         $r = $this->GuzzleHttp->post($url, $data);
         if ($r['errcode'] != 0) {
-            alog($r,2);
+            alog($r, 2);
             return [];
         }
         return $r["result"];
     }
-
 }
