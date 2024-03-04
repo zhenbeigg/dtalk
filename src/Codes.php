@@ -82,9 +82,9 @@ class Codes
      * @author: 布尔
      * @name: 通知支付结果
      * @param array $param
-     * @return array
+     * @return string
      */
-    public function payResults(array $param): array
+    public function payResults(array $param): string
     {
         /* 查询钉钉access_token */
         $param['new_token'] = 1;
@@ -99,11 +99,7 @@ class Codes
         $url = $dtalk_url . '/v1.0/badge/codes/payResults';
         $data = eyc_array_key($param, 'payCode,corpId,userId,gmtTradeCreate,gmtTradeFinish,tradeNo,tradeStatus,title,remark,amount,promotionAmount,chargeAmount,payChannelDetailList,tradeErrorCode,tradeErrorMsg,extInfo,merchantName');
         $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
-        $r = $this->GuzzleHttp->post($url, $data, $options);
-        if (isset($r['code'])) {
-            error(500, $r['message']);
-        }
-        return $r;
+        return $this->GuzzleHttp->post($url, $data, $options);
     }
     /**
      * @author: 布尔
