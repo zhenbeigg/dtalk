@@ -82,9 +82,9 @@ class Codes
      * @author: 布尔
      * @name: 通知支付结果
      * @param array $param
-     * @return string
+     * @return array
      */
-    public function payResults(array $param): string
+    public function payResults(array $param): array
     {
         /* 查询钉钉access_token */
         $param['new_token'] = 1;
