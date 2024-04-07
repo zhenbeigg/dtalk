@@ -157,7 +157,7 @@ class Calendar
         if (isset($r['code'])) {
             error(500, $r['message']);
         }
-        return $r['response']['calendars'];
+        return $r['response']['calendars']??[];
     }
 
     /**
