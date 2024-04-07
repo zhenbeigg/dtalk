@@ -430,7 +430,7 @@ class Calendar
                 $rs = $this->GuzzleHttp->get($urld, $options);
                 $r = array_merge_recursive($r, $rs);
             } while ($rs["nextToken"]);
-        }
+        } 
         return $r['users'];
     }
 
