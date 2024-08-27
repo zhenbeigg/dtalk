@@ -3,7 +3,7 @@
  * @author: 布尔
  * @name: 工作流
  * @desc: 介绍
- * @LastEditTime: 2022-03-15 20:14:01
+ * @LastEditTime: 2024-08-27 15:40:21
  */
 
 namespace Eykj\Dtalk;
@@ -75,7 +75,7 @@ class Workflow
         $r = $this->GuzzleHttp->post($url, $data, $options);
         if (!$r) {
             alog($data, 2);
-            error(500, '创建失败，请稍后重试。');
+            error(500, '网络异常，请稍后重试。');
         } elseif (isset($r['code'])) {
             error(500, $r['message']);
         }
