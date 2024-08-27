@@ -104,4 +104,23 @@ class Topapi
         }
         return $r['result'];
     }
+    /**
+     * @author xsx
+     * @name:第三方企业应用创建群
+     * @param array $param
+     * @return array
+     */
+    public function group(array $param):void
+    {
+        // $param['new_token']=1;
+        $access_token=$this->Service->get_access_token($param);
+        $dtalk_url= env('DTALK_URL', '');
+        $url=   $dtalk_url."/topapi/im/chat/scenegroup/create?access_token=$access_token";
+        $data=eyc_array_key($param,"title,template_id,owner_user_id,user_ids");
+        $r=$this->GuzzleHttp->post($url,$data);
+        if($r['errcode']!=0){
+            var_dump($r);
+            alog($r,2);
+        }
+    }
 }

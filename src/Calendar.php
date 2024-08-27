@@ -157,7 +157,7 @@ class Calendar
         if (isset($r['code'])) {
             error(500, $r['message']);
         }
-        return $r['response']['calendars'];
+        return $r['response']['calendars']??[];
     }
 
     /**
@@ -430,7 +430,7 @@ class Calendar
                 $rs = $this->GuzzleHttp->get($urld, $options);
                 $r = array_merge_recursive($r, $rs);
             } while ($rs["nextToken"]);
-        }
+        } 
         return $r['users'];
     }
 
