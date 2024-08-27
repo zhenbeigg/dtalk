@@ -5,6 +5,7 @@
  * @desc: 介绍
  * @LastEditTime: 2022-03-15 20:14:01
  */
+
 namespace Eykj\Dtalk;
 
 use Eykj\Base\GuzzleHttp;
@@ -18,7 +19,7 @@ class Workflow
     protected ?Service $Service;
 
     // 通过设置参数为 nullable，表明该参数为一个可选参数
-    public function __construct(?GuzzleHttp $GuzzleHttp,?Service $Service)
+    public function __construct(?GuzzleHttp $GuzzleHttp, ?Service $Service)
     {
         $this->GuzzleHttp = $GuzzleHttp;
         $this->Service = $Service;
@@ -29,7 +30,7 @@ class Workflow
      * @param array $param
      * @return array
      */
-    public function forms(array $param) : array
+    public function forms(array $param): array
     {
         /* 查询钉钉access_token */
         $param['new_token'] = 1;
@@ -56,7 +57,7 @@ class Workflow
      * @param array $param
      * @return array
      */
-    public function processInstances(array $param) : array
+    public function processInstances(array $param): array
     {
         /* 查询钉钉access_token */
         $param['new_token'] = 1;
@@ -72,7 +73,10 @@ class Workflow
         $data = eyc_array_key($param, 'originatorUserId,processCode,microappAgentId,deptId,approvers,ccList,ccPosition,targetSelectActioners,formComponentValues,RequestId');
         $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
         $r = $this->GuzzleHttp->post($url, $data, $options);
-        if (isset($r['code'])) {
+        if (!$r) {
+            alog($data, 2);
+            error(500, '创建失败，请稍后重试。');
+        } elseif (isset($r['code'])) {
             error(500, $r['message']);
         }
         return $r;
