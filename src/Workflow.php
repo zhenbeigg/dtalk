@@ -3,7 +3,7 @@
  * @author: 布尔
  * @name: 工作流
  * @desc: 介绍
- * @LastEditTime: 2024-08-27 15:40:21
+ * @LastEditTime: 2024-08-27 16:00:41
  */
 
 namespace Eykj\Dtalk;
@@ -78,6 +78,30 @@ class Workflow
             error(500, '网络异常，请稍后重试。');
         } elseif (isset($r['code'])) {
             error(500, $r['message']);
+        }
+        return $r;
+    }
+    /**
+     * @name:获取审批实例详情
+     * @param array $param
+     * @return array
+     */
+    public function processDetail(array $param): array
+    {
+        $param['new_token'] = 1;
+        $access_token = $this->Service->get_access_token($param);
+        if ($param['types'] == 'diy') {
+            $dtalk_url = env('DTALK_DIY_NEW_URL', '');
+        } else {
+            $dtalk_url = env('DTALK_NEW_URL', '');
+        }
+        //GET /v1.0/workflow/processInstances?processInstanceId=String HTTP/1.1
+        $url = $dtalk_url . '/v1.0/workflow/processInstances?processInstanceId=' . $param['processInstanceId'];
+        $options['headers']['x-acs-dingtalk-access-token'] = $access_token;
+        $options['content-type'] = 'application/json';
+        $r = $this->GuzzleHttp->get($url, $options);
+        if (!is_array($r)) {
+            return [];
         }
         return $r;
     }
