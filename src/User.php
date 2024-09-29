@@ -249,7 +249,7 @@ class User
         $data = eyc_array_key($param, 'mobile');
         $r = $this->GuzzleHttp->post($url, $data);
         if ($r['errcode'] != 0) {
-            error(500, $r['errmsg']);
+            return [];
         }
         return $r["result"];
     }

@@ -4,7 +4,7 @@
  * @author: 布尔
  * @name: 钉钉新教育部门接口类
  * @desc: 介绍
- * @LastEditTime: 2023-08-31 17:51:40
+ * @LastEditTime: 2024-09-04 15:32:05
  * @FilePath: \dtalk\src\Edu.php
  */
 
@@ -12,6 +12,7 @@ namespace Eykj\Dtalk;
 
 use Eykj\Base\GuzzleHttp;
 use Eykj\Dtalk\Service;
+use function Hyperf\Support\env;
 
 class Edu
 {
