@@ -3,7 +3,7 @@
  * @author: 布尔
  * @name: 审批-ocr识别
  * @desc: 介绍
- * @LastEditTime: 2023-11-21 15:35:53
+ * @LastEditTime: 2024-09-30 17:30:06
  */
 
 namespace Eykj\Dtalk;
@@ -121,6 +121,61 @@ class Topapi
         if($r['errcode']!=0){
             var_dump($r);
             alog($r,2);
+        }
+    }
+    /**
+     * @author: 布尔
+     * @name: 获取外部联系人列表
+     * @param array $param
+     * @return array
+     */
+    public function extcontact_list(array $param): array
+    {
+        /* 查询钉钉access_token */
+        $access_token = $this->Service->get_access_token($param);
+        /* 获取配置url */
+        $dtalk_url = env('DTALK_URL', '');
+        $url = $dtalk_url . '/topapi/extcontact/list?access_token=' . $access_token;
+        $data = array('offset' => $this->offset, 'size' => $this->size);
+        $r = $this->GuzzleHttp->post($url, $data);
+        if ($r["errcode"] == 0) {
+            if ($r["results"]) {
+                do {
+                    $data['offset'] += $this->size;
+                    $rs = $this->GuzzleHttp->post($url, $data);
+                    $r = array_merge_recursive($r, $rs);
+                } while ($rs["results"]);
+            }
+        } else {
+            alog($r, 2);
+            bug()->error('获取外部联系人列表-' . json_encode($r, 320));
+            logger()->error('获取外部联系人列表', $r);
+            return [];
+        }
+        return $r['results'];
+    }
+    /**
+     * @author: 布尔
+     * @name: 获取外部联系人详情
+     * @param array $param
+     * @return array
+     */
+    public function extcontact_get(array $param): array
+    {
+        /* 查询钉钉access_token */
+        $access_token = $this->Service->get_access_token($param);
+        /* 获取配置url */
+        $dtalk_url = env('DTALK_URL', '');
+        $url = $dtalk_url . '/topapi/extcontact/list?access_token=' . $access_token;
+        $data = eyc_array_key($param, 'user_id');
+        $r = $this->GuzzleHttp->post($url, $data);
+        if ($r["errcode"] == 0) {
+            return $r['result'];
+        } else {
+            alog($r, 2);
+            bug()->error('获取外部联系人详情-' . json_encode($r, 320));
+            logger()->error('获取外部联系人详情', $r);
+            return [];
         }
     }
 }
